@@ -542,6 +542,13 @@
         "crystal": "HT3",
         "mace": "LT1"
       }
+    },
+    {
+      "name": "ThatYibble",
+      "region": "",
+      "tiers": {
+        "uhc": "LT3"
+      }
     }
   ]
 }
