@@ -546,7 +546,8 @@
         "dsmp": "LT1",
         "uhc": "LT1",
         "sword": "LT1",
-        "axe": "HT1"
+        "axe": "HT1",
+        "crystal": "HT3"
       }
     }
   ]
