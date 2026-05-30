@@ -506,7 +506,8 @@
         "dsmp": "HT1",
         "uhc": "HT2",
         "sword": "HT1",
-        "axe": "LT1"
+        "axe": "LT1",
+        "npot": "LT1"
       }
     }
   ]
