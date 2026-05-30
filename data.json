@@ -498,6 +498,13 @@
       "tiers": {
         "hsmp": "LT1"
       }
+    },
+    {
+      "name": "ThornierChunk58",
+      "region": "",
+      "tiers": {
+        "hsmp": "LT5"
+      }
     }
   ]
 }
