@@ -481,7 +481,8 @@
       "name": "ovenokara",
       "region": "",
       "tiers": {
-        "dsmp": "LT3"
+        "dsmp": "LT3",
+        "mace": "HT3"
       }
     },
     {
