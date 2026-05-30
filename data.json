@@ -528,7 +528,8 @@
       "name": "ThornierChunk58",
       "region": "",
       "tiers": {
-        "dsmp": "HT5"
+        "dsmp": "HT5",
+        "hsmp": "LT5"
       }
     }
   ]
