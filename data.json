@@ -499,13 +499,6 @@
       "tiers": {
         "hsmp": "LT1"
       }
-    },
-    {
-      "name": "TestDummy",
-      "region": "",
-      "tiers": {
-        "sword": "HT5"
-      }
     }
   ]
 }
