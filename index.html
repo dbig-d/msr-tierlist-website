@@ -108,6 +108,7 @@ select:focus{border-color:var(--accent)}
   border-radius:12px 12px 0 0;transition:.16s;
 }
 .tab .ic{font-size:24px;line-height:1;opacity:.82;transition:.16s}
+.tab .ic img{opacity:1; filter:none;}
 .tab .lb{line-height:1}
 .tab:hover{color:var(--text)}
 .tab:hover .ic{opacity:1}
@@ -155,6 +156,7 @@ main{max-width:1200px;margin:0 auto;padding:26px 20px 60px}
 .gm-strip{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end;max-width:360px}
 .gm-chip{display:flex;align-items:center;gap:4px;font-size:11px;font-weight:600;padding:3px 7px;border-radius:6px;background:var(--panel-2);border:1px solid var(--line-soft)}
 .gm-chip .ic{font-size:12px;filter:grayscale(.2)}
+.gm-chip .ic img{filter:none; opacity:1;}
 
 /* tier badge */
 .tb{font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:11px;letter-spacing:.3px;padding:2px 7px;border-radius:5px;line-height:1.4;white-space:nowrap}
@@ -302,6 +304,7 @@ function tierBadge(t){ return `<span class="tb t${tierDigit(t)} ${tierKind(t)}">
 function avatar(name, cls=""){
   const init=(name.replace(/[^a-zA-Z0-9]/g,"")[0]||"?").toUpperCase();
   return `<div class="avatar ${cls}">
+    <img src="https://minotar.net/helm/${encodeURIComponent(name)}/96" loading="lazy"
     <img src="https://minotar.net/avatar/${encodeURIComponent(name)}/96" loading="lazy"
          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
     <span class="avatar-fallback">${init}</span></div>`;
