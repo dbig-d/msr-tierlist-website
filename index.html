@@ -99,16 +99,20 @@ select:focus{border-color:var(--accent)}
 
 /* ---------- Tabs ---------- */
 .tabs-bar{position:sticky;top:64px;z-index:40;background:rgba(7,12,20,.84);backdrop-filter:blur(14px);border-bottom:1px solid var(--line-soft)}
-.tabs{max-width:1200px;margin:0 auto;padding:0 14px;display:flex;gap:3px;overflow-x:auto;scrollbar-width:none}
+.tabs{max-width:1200px;margin:0 auto;padding:0 12px;display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;justify-content:safe center}
 .tabs::-webkit-scrollbar{display:none}
 .tab{
-  flex:0 0 auto;display:flex;align-items:center;gap:7px;padding:13px 14px;font-size:14px;font-weight:500;
-  color:var(--text-dim);border-bottom:2px solid transparent;white-space:nowrap;transition:.16s;
+  flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:7px;
+  padding:11px 13px 9px;min-width:78px;font-size:12.5px;font-weight:600;
+  color:var(--text-dim);white-space:nowrap;border-bottom:2px solid transparent;
+  border-radius:12px 12px 0 0;transition:.16s;
 }
-.tab .ic{font-size:15px;filter:grayscale(.35)}
+.tab .ic{font-size:24px;line-height:1;opacity:.82;transition:.16s}
+.tab .lb{line-height:1}
 .tab:hover{color:var(--text)}
-.tab.active{color:var(--text);border-bottom-color:var(--accent)}
-.tab.active .ic{filter:none}
+.tab:hover .ic{opacity:1}
+.tab.active{color:var(--text);background:linear-gradient(180deg,var(--panel),rgba(16,26,43,0));border-bottom-color:var(--accent)}
+.tab.active .ic{opacity:1}
 
 /* ---------- Main ---------- */
 main{max-width:1200px;margin:0 auto;padding:26px 20px 60px}
@@ -340,7 +344,7 @@ const TITLES = [
   { min:350, name:"Combat Master", color:"#7bc4ff" },
   { min:250, name:"Combat Ace", color:"#a974f0" },
   { min:150, name:"Combat Specialist", color:"#54c66b" },
-  { min:80, name:"Combat Cadet", color:"#4a9ee8" },
+  { min:80, name:"Combat Cadet", color:"#4670a0" },
   { min:30, name:"Combat Novice", color:"#8aa0bb" },
   { min:0, name:"Rookie", color:"#5a6e88" }
 ];
@@ -361,7 +365,7 @@ function tierBadge(t){ return `<span class="tb t${tierDigit(t)} ${tierKind(t)}">
 function avatar(name, cls=""){
   const init=(name.replace(/[^a-zA-Z0-9]/g,"")[0]||"?").toUpperCase();
   return `<div class="avatar ${cls}">
-    <img src="https://minotar.net/helm/${encodeURIComponent(name)}/96" loading="lazy"
+    <img src="https://minotar.net/avatar/${encodeURIComponent(name)}/96" loading="lazy"
          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
     <span class="avatar-fallback">${init}</span></div>`;
 }
@@ -378,8 +382,8 @@ let activeTab="overall", query="", region="";
 
 function buildTabs(){
   const tabs=document.getElementById("tabs");
-  let html=`<button class="tab ${activeTab==="overall"?"active":""}" data-tab="overall"><span class="ic">🏆</span> Overall</button>`;
-  GAMEMODES.forEach(g=>{ html+=`<button class="tab ${activeTab===g.id?"active":""}" data-tab="${g.id}"><span class="ic">${g.icon}</span> ${g.name}</button>`; });
+  let html=`<button class="tab ${activeTab==="overall"?"active":""}" data-tab="overall"><span class="ic">🏆</span><span class="lb">Overall</span></button>`;
+  GAMEMODES.forEach(g=>{ html+=`<button class="tab ${activeTab===g.id?"active":""}" data-tab="${g.id}"><span class="ic">${g.icon}</span><span class="lb">${g.name}</span></button>`; });
   tabs.innerHTML=html;
   tabs.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{activeTab=b.dataset.tab;buildTabs();render();});
 }
