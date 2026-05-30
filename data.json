@@ -538,6 +538,13 @@
         "mace": "HT5",
         "crystal": "LT2"
       }
+    },
+    {
+      "name": "Henrry999",
+      "region": "",
+      "tiers": {
+        "dsmp": "LT1"
+      }
     }
   ]
 }
