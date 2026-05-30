@@ -49,55 +49,55 @@
     }
   ],
   "gamemodes": [
-    { 
-      "id":"sword",
-      "name":"Sword",
-      "icon":"<img src='Icons/Sword.png' style='height:1em; vertical-align:middle; transform:scale(1.5);'>" 
+    {
+      "id": "sword",
+      "name": "Sword",
+      "icon": "<img src='Icons/Sword.png' style='height:1em; vertical-align:middle; transform:scale(1.5);'>"
     },
-    { 
-      "id":"axe", 
-      "name":"Axe", 
-      "icon":"<img src='Icons/Axe.png' style='height:1em; vertical-align:middle; transform:scale(1.5);'>" 
+    {
+      "id": "axe",
+      "name": "Axe",
+      "icon": "<img src='Icons/Axe.png' style='height:1em; vertical-align:middle; transform:scale(1.5);'>"
     },
-    { 
-      "id":"uhc", 
-      "name":"UHC", 
-      "icon":"<img src='Icons/Lava Bucket.png' style='height:1em; vertical-align:middle; transform:scale(1.5);'>" 
+    {
+      "id": "uhc",
+      "name": "UHC",
+      "icon": "<img src='Icons/Lava Bucket.png' style='height:1em; vertical-align:middle; transform:scale(1.5);'>"
     },
-    { 
-      "id":"mace", 
-      "name":"Mace", 
-      "icon":"<img src='Icons/Mace.png' style='height:1em; vertical-align:middle; transform:scale(1.5);'>" 
+    {
+      "id": "mace",
+      "name": "Mace",
+      "icon": "<img src='Icons/Mace.png' style='height:1em; vertical-align:middle; transform:scale(1.5);'>"
     },
-    { 
-      "id":"crystal", 
-      "name":"Crystal", 
-      "icon":"<img src='Icons/End Crystal.png' style='height:1em; vertical-align:middle; transform:scale(1.5);'>" 
+    {
+      "id": "crystal",
+      "name": "Crystal",
+      "icon": "<img src='Icons/End Crystal.png' style='height:1em; vertical-align:middle; transform:scale(1.5);'>"
     },
-    { 
-      "id":"dsmp", 
-      "name":"Diamond SMP", 
-      "icon":"<img src='Icons/Diamond SMP.png' style='height:1em; vertical-align:middle; transform:scale(1.5);'>" 
+    {
+      "id": "dsmp",
+      "name": "Diamond SMP",
+      "icon": "<img src='Icons/Diamond SMP.png' style='height:1em; vertical-align:middle; transform:scale(1.5);'>"
     },
-    { 
-      "id":"nsmp", 
-      "name":"Netherite SMP", 
-      "icon":"<img src='Icons/Netherite SMP.png' style='height:1em; vertical-align:middle; transform:scale(1.5);'>" 
+    {
+      "id": "nsmp",
+      "name": "Netherite SMP",
+      "icon": "<img src='Icons/Netherite SMP.png' style='height:1em; vertical-align:middle; transform:scale(1.5);'>"
     },
-    { 
-      "id":"dpot", 
-      "name":"Diamond Pot", 
-      "icon":"<img src='Icons/Diamond Pot.png' style='height:1em; vertical-align:middle; transform:scale(1.5);'>" 
+    {
+      "id": "dpot",
+      "name": "Diamond Pot",
+      "icon": "<img src='Icons/Diamond Pot.png' style='height:1em; vertical-align:middle; transform:scale(1.5);'>"
     },
-    { 
-      "id":"npot", 
-      "name":"Netherite Pot", 
-      "icon":"<img src='Icons/Netherite Pot.png' style='height:1em; vertical-align:middle; transform:scale(1.5);'>" 
+    {
+      "id": "npot",
+      "name": "Netherite Pot",
+      "icon": "<img src='Icons/Netherite Pot.png' style='height:1em; vertical-align:middle; transform:scale(1.5);'>"
     },
-    { 
-      "id":"hsmp", 
-      "name":"Hybrid SMP", 
-      "icon":"<img src='Icons/Hybrid SMP.png' style='height:1em; vertical-align:middle; transform:scale(1.5);'>" 
+    {
+      "id": "hsmp",
+      "name": "Hybrid SMP",
+      "icon": "<img src='Icons/Hybrid SMP.png' style='height:1em; vertical-align:middle; transform:scale(1.5);'>"
     }
   ],
   "players": [
@@ -181,9 +181,9 @@
       "tiers": {
         "sword": "LT1",
         "axe": "HT3",
-        "uhc": "LT2",
+        "uhc": "HT2",
         "mace": "LT2",
-        "crystal": "HT2",
+        "crystal": "LT1",
         "dsmp": "LT2",
         "nsmp": "HT3",
         "dpot": "HT3",
@@ -198,7 +198,8 @@
         "sword": "HT2",
         "axe": "LT2",
         "dsmp": "LT3",
-        "dpot": "HT2"
+        "dpot": "HT2",
+        "nsmp": "HT3"
       }
     },
     {
@@ -282,12 +283,15 @@
       "region": "",
       "tiers": {
         "sword": "HT3",
-        "axe": "LT3",
-        "uhc": "LT3",
-        "crystal": "LT5",
+        "axe": "HT3",
+        "uhc": "HT3",
+        "crystal": "LT3",
         "dsmp": "LT3",
         "nsmp": "HT4",
-        "npot": "LT2"
+        "npot": "LT2",
+        "mace": "LT3",
+        "dpot": "LT2",
+        "hsmp": "LT2"
       }
     },
     {
@@ -315,7 +319,8 @@
         "mace": "LT2",
         "dsmp": "LT3",
         "nsmp": "LT3",
-        "hsmp": "LT2"
+        "hsmp": "LT2",
+        "uhc": "LT2"
       }
     },
     {
@@ -361,7 +366,9 @@
       "region": "",
       "tiers": {
         "sword": "HT4",
-        "axe": "LT3"
+        "axe": "LT3",
+        "uhc": "HT4",
+        "mace": "LT4"
       }
     },
     {
@@ -440,7 +447,8 @@
       "region": "",
       "tiers": {
         "axe": "LT5",
-        "dsmp": "HT5"
+        "dsmp": "LT4",
+        "sword": "HT5"
       }
     },
     {
@@ -450,14 +458,6 @@
         "uhc": "HT3",
         "dsmp": "HT4",
         "hsmp": "HT3"
-      }
-    },
-    {
-      "name": "Yibbble",
-      "region": "",
-      "tiers": {
-        "uhc": "LT3",
-        "hsmp": "LT5"
       }
     },
     {
@@ -473,7 +473,8 @@
       "name": "ovenokara",
       "region": "",
       "tiers": {
-        "dsmp": "LT3"
+        "dsmp": "LT3",
+        "mace": "HT3"
       }
     },
     {
@@ -497,6 +498,57 @@
       "region": "",
       "tiers": {
         "hsmp": "LT1"
+      }
+    },
+    {
+      "name": "MrP3nguin_",
+      "region": "",
+      "tiers": {
+        "dsmp": "HT1",
+        "uhc": "HT2",
+        "axe": "LT1",
+        "npot": "LT1",
+        "crystal": "LT1",
+        "mace": "LT1",
+        "sword": "HT1"
+      }
+    },
+    {
+      "name": "fanaticloudy",
+      "region": "",
+      "tiers": {
+        "hsmp": "LT2",
+        "dsmp": "HT3"
+      }
+    },
+    {
+      "name": "ThornierChunk58",
+      "region": "",
+      "tiers": {
+        "dsmp": "HT5",
+        "hsmp": "LT5",
+        "mace": "HT5",
+        "crystal": "LT2"
+      }
+    },
+    {
+      "name": "Henrry999",
+      "region": "",
+      "tiers": {
+        "dsmp": "LT1",
+        "uhc": "LT1",
+        "sword": "LT1",
+        "axe": "HT1",
+        "crystal": "HT3",
+        "mace": "LT1"
+      }
+    },
+    {
+      "name": "ThatYibble",
+      "region": "",
+      "tiers": {
+        "uhc": "LT3",
+        "hsmp": "LT5"
       }
     }
   ]
