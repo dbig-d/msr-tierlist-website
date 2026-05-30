@@ -22,7 +22,7 @@
   --text-dim:#8aa0bb;
   --text-faint:#5a6e88;
 
-  --accent:#91b8ff;     /* brand icy blue */
+  --accent:#7bc4ff;     /* brand icy blue */
   --accent-2:#bee6ff;   /* brand light blue */
 
   /* Tier accent ramp — 1 gold, 2 silver, 3 bronze, 4 purple, 5 gray */
@@ -37,40 +37,26 @@
 html{scroll-behavior:smooth}
 body{
   font-family:'Outfit',sans-serif;
+  background:var(--bg);
   color:var(--text);
   min-height:100vh;
   -webkit-font-smoothing:antialiased;
   overflow-x:hidden;
 }
 body::before{
-  content:"";position:fixed;inset:0;z-index:-3;
+  content:"";position:fixed;inset:0;z-index:-2;
   background:
     radial-gradient(900px 520px at 82% -12%, rgba(123,196,255,.13), transparent 60%),
     radial-gradient(760px 600px at -5% 105%, rgba(123,196,255,.07), transparent 55%),
-    linear-gradient(180deg, var(--bg) 75%, var(--accent) 100%);
+    var(--bg);
 }
 body::after{
-  content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;
+  content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
   background-image:
     linear-gradient(rgba(123,196,255,.022) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(116, 48, 48, 0.022) 1px, transparent 1px);
+    linear-gradient(90deg, rgba(123,196,255,.022) 1px, transparent 1px);
   background-size:34px 34px;
-  mask-image:radial-gradient(ellipse 80% 70% at 50% 0%, var(--accent) 30%, transparent 90%);
-}
-
-/* Floating Bubbles Effect */
-.bubbles-container{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;pointer-events:none;overflow:hidden}
-.bubble{position:absolute;bottom:-100px;background:rgba(123,196,255,0.15);border-radius:50%;animation:float-bubble 15s infinite ease-in}
-.bubble:nth-child(1){width:40px;height:40px;left:10%;animation-duration:12s;animation-delay:1s}
-.bubble:nth-child(2){width:20px;height:20px;left:30%;animation-duration:18s;animation-delay:3s}
-.bubble:nth-child(3){width:50px;height:50px;left:55%;animation-duration:15s;animation-delay:0s}
-.bubble:nth-child(4){width:30px;height:30px;left:80%;animation-duration:20s;animation-delay:5s}
-.bubble:nth-child(5){width:45px;height:45px;left:90%;animation-duration:14s;animation-delay:2s}
-@keyframes float-bubble{
-  0%{transform:translateY(0) scale(1);opacity:0}
-  20%{opacity:1}
-  80%{opacity:1}
-  100%{transform:translateY(-110vh) scale(1.5);opacity:0}
+  mask-image:radial-gradient(ellipse 80% 70% at 50% 0%, #000 30%, transparent 90%);
 }
 
 a{color:inherit;text-decoration:none}
@@ -89,12 +75,7 @@ header{
   image-rendering:pixelated;border:1px solid rgba(123,196,255,.4);
   box-shadow:0 2px 12px rgba(123,196,255,.22), inset 0 1px 0 rgba(255,255,255,.1);
 }
-.brand-text h1{
-  font-family:'Chakra Petch',sans-serif;font-size:18px;font-weight:700;letter-spacing:.4px;line-height:1;
-  background: linear-gradient(90deg, var(--accent), var(--accent-2));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
+.brand-text h1{font-family:'Chakra Petch',sans-serif;font-size:18px;font-weight:700;letter-spacing:.4px;line-height:1}
 .brand-text p{font-size:11px;color:var(--accent);letter-spacing:1.6px;text-transform:uppercase;margin-top:4px;opacity:.85}
 
 .head-tools{margin-left:auto;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
@@ -166,18 +147,33 @@ main{max-width:1200px;margin:0 auto;padding:26px 20px 60px}
 .pinfo{min-width:0}
 .pname{font-weight:600;font-size:16px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;word-break:break-word}
 .region{font-size:10px;font-weight:700;letter-spacing:.5px;padding:2px 6px;border-radius:5px;background:var(--panel-2);border:1px solid var(--line);color:var(--text-dim);flex:0 0 auto}
-.ptitle{font-size:12.5px;color:var(--text-dim);margin-top:2px;display:flex;align-items:center;gap:6px}
-.ptitle .dot{width:6px;height:6px;border-radius:50%}
+.ptitle{font-size:13px;color:var(--text-dim);margin-top:3px;display:flex;align-items:center;gap:7px}
+.ptitle .acc-ic{width:17px;height:17px;flex:0 0 auto;display:block}
+.ptitle .acc-name{font-weight:500}
+.ptitle .pts{color:var(--text-faint);font-size:12.5px}
 
 .pright{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
 .points{font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:19px;line-height:1}
 .points small{font-size:11px;color:var(--text-faint);font-weight:500}
-.gm-strip{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end;max-width:360px}
-.gm-chip{display:flex;align-items:center;gap:4px;font-size:11px;font-weight:600;padding:3px 7px;border-radius:6px;background:var(--panel-2);border:1px solid var(--line-soft)}
-.gm-chip .ic{font-size:12px;filter:grayscale(.2)}
-.gm-chip .ic img{filter:none; opacity:1;}
 
-/* tier badge */
+/* stacked tier tiles: gamemode orb on top, tier label below (mctiers style) */
+.gm-strip{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end;max-width:480px}
+.gm-tile{display:flex;flex-direction:column;align-items:center;gap:4px;width:40px}
+.gm-orb{
+  width:36px;height:36px;border-radius:50%;display:grid;place-items:center;
+  background:radial-gradient(circle at 50% 32%, #1d2c44, #0d1524);
+  border:1px solid var(--line);box-shadow:inset 0 1px 0 rgba(255,255,255,.04);
+}
+.gm-orb .ic{display:grid;place-items:center;font-size:18px;line-height:0}
+.gm-orb .ic img{width:22px!important;height:22px!important;object-fit:contain!important;transform:none!important;display:block}
+.gm-t{font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:10.5px;letter-spacing:.3px;line-height:1}
+.gm-orb.t1{border-color:color-mix(in srgb,var(--t1) 60%,transparent)} .gm-t.t1{color:var(--t1)}
+.gm-orb.t2{border-color:color-mix(in srgb,var(--t2) 55%,transparent)} .gm-t.t2{color:var(--t2)}
+.gm-orb.t3{border-color:color-mix(in srgb,var(--t3) 60%,transparent)} .gm-t.t3{color:var(--t3)}
+.gm-orb.t4{border-color:color-mix(in srgb,var(--t4) 60%,transparent)} .gm-t.t4{color:var(--t4)}
+.gm-orb.t5{border-color:color-mix(in srgb,var(--t5) 55%,transparent)} .gm-t.t5{color:var(--t5)}
+
+/* tier badge (used in the player modal) */
 .tb{font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:11px;letter-spacing:.3px;padding:2px 7px;border-radius:5px;line-height:1.4;white-space:nowrap}
 .tb.ht{color:#000000}
 .tb.lt{background:transparent!important}
@@ -218,6 +214,7 @@ main{max-width:1200px;margin:0 auto;padding:26px 20px 60px}
 .modal-head .avatar{width:66px;height:66px;border-radius:12px}
 .modal-head .mh-info h3{font-family:'Chakra Petch';font-size:23px;font-weight:700;word-break:break-word}
 .modal-head .mh-info .mtitle{font-size:14px;margin-top:3px;display:flex;gap:7px;align-items:center}
+.modal-head .mh-info .mtitle .acc-ic{width:18px;height:18px;flex:0 0 auto}
 .modal-head .mh-info .mmeta{font-size:13px;color:var(--text-dim);margin-top:7px;display:flex;gap:14px;flex-wrap:wrap}
 .modal-head .mh-info .mmeta b{color:var(--text);font-family:'Chakra Petch'}
 .close-x{position:absolute;top:14px;right:14px;width:32px;height:32px;border-radius:8px;display:grid;place-items:center;background:var(--panel-2);border:1px solid var(--line);font-size:18px;color:var(--text-dim);transition:.15s}
@@ -228,6 +225,7 @@ main{max-width:1200px;margin:0 auto;padding:26px 20px 60px}
 .mtier{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 13px;border-radius:10px;background:var(--bg-2);border:1px solid var(--line-soft)}
 .mtier .mt-gm{display:flex;align-items:center;gap:9px;font-size:13.5px;font-weight:500}
 .mtier .mt-gm .ic{font-size:16px}
+.mtier .mt-gm .ic img{width:18px;height:18px;object-fit:contain;vertical-align:middle}
 .mtier .mt-pts{font-size:11px;color:var(--text-faint);margin-left:auto;margin-right:8px}
 
 /* ---------- Stats / footer ---------- */
@@ -251,11 +249,10 @@ footer b{color:var(--text-dim)}
   main{padding:20px 14px 60px}
   .view-title h2{font-size:22px}
   .row{grid-template-columns:40px 40px 1fr;gap:11px;padding:11px 13px}
-  .pright{grid-column:1 / -1;flex-direction:row;justify-content:space-between;align-items:center;border-top:1px solid var(--line-soft);padding-top:10px;margin-top:2px}
-  .gm-strip{max-width:none;flex:1;justify-content:flex-start;overflow-x:auto;flex-wrap:nowrap;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .pright{grid-column:1 / -1;flex-direction:row;justify-content:flex-start;align-items:center;border-top:1px solid var(--line-soft);padding-top:10px;margin-top:2px}
+  .gm-strip{max-width:none;flex:1;justify-content:flex-start;overflow-x:auto;flex-wrap:nowrap;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding-bottom:2px}
   .gm-strip::-webkit-scrollbar{display:none}
-  .gm-chip{flex:0 0 auto}
-  .points{order:-1;flex:0 0 auto}
+  .gm-tile{flex:0 0 auto}
   .mtiers{grid-template-columns:1fr}
   .cols{grid-auto-columns:minmax(140px,76%)}
 }
@@ -263,14 +260,6 @@ footer b{color:var(--text-dim)}
 </style>
 </head>
 <body>
-
-<div class="bubbles-container">
-  <div class="bubble"></div>
-  <div class="bubble"></div>
-  <div class="bubble"></div>
-  <div class="bubble"></div>
-  <div class="bubble"></div>
-</div>
 
 <header>
   <div class="head-inner">
@@ -305,15 +294,8 @@ footer b{color:var(--text-dim)}
 
 <script>
 /* ============================================================================
-   ███  DATA — EDIT THIS SECTION ONLY  ███
-   ----------------------------------------------------------------------------
-   GAMEMODES : id (internal key), name (shown), icon (emoji)
-   PLAYERS   : name (MC username, used for head avatar), optional region,
-               tiers = { gamemodeId: "HT1".."LT5" } for every tested mode.
-   Valid tiers: HT1 LT1 HT2 LT2 HT3 LT3 HT4 LT4 HT5 LT5
+   ███  DATA  ███  — tier data lives in data.json (edit it, or use the Discord bot).
    ============================================================================ */
-
-// Tier data lives in data.json (edit that file, or update it via the Discord bot).
 let GAMEMODES, PLAYERS, POINTS, TITLES, GM;
 
 /* ============================================================================
@@ -328,11 +310,25 @@ const playerTotal = p => Object.values(p.tiers).reduce((s,t)=>s+tierPoints(t),0)
 const titleFor = pts => TITLES.find(t=>pts>=t.min);
 
 function tierBadge(t){ return `<span class="tb t${tierDigit(t)} ${tierKind(t)}">${t}</span>`; }
+
+/* one player tier as a stacked tile: gamemode orb on top, tier label below */
+function gmTile(g, tier){
+  const d = tierDigit(tier);
+  return `<span class="gm-tile" title="${g.name}: ${tier}"><span class="gm-orb t${d}"><span class="ic">${g.icon}</span></span><span class="gm-t t${d}">${tier}</span></span>`;
+}
+
+/* accolade/title emblem. If a title has an "icon" in data.json it's used;
+   otherwise a faceted gem is drawn in the title colour (easy to swap later). */
+function accoladeIcon(t){
+  if(t.icon) return `<img class="acc-ic" src="${t.icon}" alt="">`;
+  const c=t.color;
+  return `<svg class="acc-ic" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 3h12l4 6-10 12L2 9z" fill="${c}33" stroke="${c}" stroke-width="1.6" stroke-linejoin="round"/><path d="M2 9h20M6 3l6 6 6-6M12 9v12" stroke="${c}" stroke-width="1" opacity=".6"/></svg>`;
+}
+
 function avatar(name, cls=""){
   const init=(name.replace(/[^a-zA-Z0-9]/g,"")[0]||"?").toUpperCase();
   return `<div class="avatar ${cls}">
     <img src="https://minotar.net/helm/${encodeURIComponent(name)}/96" loading="lazy"
-    <img src="https://minotar.net/avatar/${encodeURIComponent(name)}/96" loading="lazy"
          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
     <span class="avatar-fallback">${init}</span></div>`;
 }
@@ -380,16 +376,15 @@ function renderOverall(){
   html+=`<div class="board">`;
   ranked.forEach((x,idx)=>{
     const p=x.p,t=titleFor(x.total),topCls=x.rank<=3?` top${x.rank}`:"";
-    const chips=GAMEMODES.filter(g=>p.tiers[g.id]).map(g=>`<span class="gm-chip"><span class="ic">${g.icon}</span>${tierBadge(p.tiers[g.id])}</span>`).join("");
+    const chips=GAMEMODES.filter(g=>p.tiers[g.id]).map(g=>gmTile(g,p.tiers[g.id])).join("");
     html+=`<div class="row${topCls}" style="animation-delay:${idx*18}ms" data-player="${encodeURIComponent(p.name)}">
       <div class="rank">${x.rank}${x.rank<=3?'<small>RANK</small>':''}</div>
       ${avatar(p.name)}
       <div class="pinfo">
         <div class="pname">${p.name} ${p.region?`<span class="region">${p.region}</span>`:""}</div>
-        <div class="ptitle"><span class="dot" style="background:${t.color}"></span>${t.name}</div>
+        <div class="ptitle">${accoladeIcon(t)}<span class="acc-name">${t.name}</span><span class="pts">(${x.total} points)</span></div>
       </div>
       <div class="pright">
-        <div class="points" style="color:${t.color}">${x.total}<small> PTS</small></div>
         <div class="gm-strip">${chips}</div>
       </div>
     </div>`;
@@ -427,7 +422,7 @@ function openPlayer(name){
     <button class="close-x" onclick="closeModal()">✕</button>
     <div class="modal-head">${avatar(p.name)}
       <div class="mh-info"><h3>${p.name}</h3>
-        <div class="mtitle" style="color:${t.color}"><span class="dot" style="width:8px;height:8px;border-radius:50%;background:${t.color}"></span>${t.name}</div>
+        <div class="mtitle" style="color:${t.color}">${accoladeIcon(t)}${t.name}</div>
         <div class="mmeta"><span>Overall&nbsp;<b>#${rank}</b></span><span><b>${total}</b>&nbsp;points</span>${p.region?`<span>Region&nbsp;<b>${p.region}</b></span>`:""}</div>
       </div></div>
     <div class="modal-body"><h4>Gamemode Tiers</h4><div class="mtiers">${tiers}</div></div>`;
@@ -447,7 +442,6 @@ async function init(){
   const content=document.getElementById("content");
   content.innerHTML='<div class="empty-state">Loading rankings…</div>';
   try{
-    // cache-bust so hand edits / bot updates appear within ~a minute instead of being cached
     const res=await fetch("./data.json?t="+Date.now(),{cache:"no-store"});
     if(!res.ok) throw new Error("HTTP "+res.status);
     const DATA=await res.json();
