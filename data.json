@@ -520,7 +520,8 @@
       "name": "fanaticloudy",
       "region": "",
       "tiers": {
-        "hsmp": "LT2"
+        "hsmp": "LT2",
+        "dsmp": "HT3"
       }
     }
   ]
