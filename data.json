@@ -545,7 +545,8 @@
       "tiers": {
         "dsmp": "LT1",
         "uhc": "LT1",
-        "sword": "LT1"
+        "sword": "LT1",
+        "axe": "HT1"
       }
     }
   ]
