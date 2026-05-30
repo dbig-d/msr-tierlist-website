@@ -508,6 +508,13 @@
         "crystal": "LT2",
         "mace": "HT5"
       }
+    },
+    {
+      "name": "kimjungoonisthemasterofgoon",
+      "region": "",
+      "tiers": {
+        "sword": "HT1"
+      }
     }
   ]
 }
