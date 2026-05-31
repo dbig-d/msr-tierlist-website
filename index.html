@@ -37,7 +37,6 @@
 html{scroll-behavior:smooth}
 body{
   font-family:'Outfit',sans-serif;
-  background:var(--bg);
   color:var(--text);
   min-height:100vh;
   -webkit-font-smoothing:antialiased;
@@ -80,7 +79,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 /* ---------- Header ---------- */
 header{
   position:sticky;top:0;z-index:50;
-  background: linear-gradient(90deg, rgba(0, 0, 0, 0.95) 0%, rgba(148, 198, 255, 0.84) 100%); backdrop-filter: blur(14px);
+  background:url("Images/Backgrounds/Top Background/Top Background 1.png") center/cover no-repeat;
   border-bottom:1px solid var(--line-soft);
 }
 .head-inner{max-width:1200px;margin:0 auto;padding:13px 20px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
@@ -118,7 +117,12 @@ select{
 select:focus{border-color:var(--accent)}
 
 /* ---------- Tabs ---------- */
-.tabs-bar{position:sticky;top:64px;z-index:40;background:rgba(7,12,20,.84);backdrop-filter:blur(14px);border-bottom:1px solid var(--line-soft)}
+ .tabs-bar{
+  position:sticky;top:64px;z-index:40;background:rgba(7,12,20,.84);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line-soft);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+ }
+ .tabs-bar.is-hidden{transform:translateY(-100%);opacity:0;pointer-events:none}
 .tabs{max-width:1200px;margin:0 auto;padding:0 12px;display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;justify-content:safe center}
 .tabs::-webkit-scrollbar{display:none}
 .tab{
@@ -173,8 +177,8 @@ main{max-width:1200px;margin:0 auto;padding:26px 20px 60px}
 .ptitle .pts{color:var(--text-faint);font-size:12.5px}
 
 .pright{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
-.points{font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:19px;line-height:1}
-.points small{font-size:11px;color:var(--text-faint);font-weight:500}
+.points{font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:16px;line-height:1}
+.points small{font-size:10px;color:var(--text-faint);font-weight:500}
 
 /* stacked tier tiles: gamemode orb on top, tier label below (mctiers style) */
 .gm-strip{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end;max-width:480px}
@@ -242,16 +246,18 @@ main{max-width:1200px;margin:0 auto;padding:26px 20px 60px}
 .modal-body{padding:18px 24px 26px}
 .modal-body h4{font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-faint);margin-bottom:12px}
 .mtiers{display:grid;grid-template-columns:1fr 1fr;gap:9px}
-.mtier{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 13px;border-radius:10px;background:var(--bg-2);border:1px solid var(--line-soft)}
-.mtier .mt-gm{display:flex;align-items:center;gap:9px;font-size:13.5px;font-weight:500}
+.mtier{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 13px;border-radius:10px;background:var(--bg-2);border:1px solid var(--line-soft);min-width:0}
+.mtier .mt-gm{display:flex;align-items:center;gap:9px;font-size:13.5px;font-weight:500;min-width:0;flex:1}
+.mtier .mt-gm .mt-gn{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .mtier .mt-gm .ic{font-size:16px}
 .mtier .mt-gm .ic img{width:18px;height:18px;object-fit:contain;vertical-align:middle}
-.mtier .mt-pts{font-size:11px;color:var(--text-faint);margin-left:auto;margin-right:8px}
+.mtier .mt-pts{font-size:10px;color:var(--text-faint);margin-left:auto;margin-right:8px;flex-shrink:0;white-space:nowrap}
+.mtier .tb{flex-shrink:0}
 
 /* ---------- Stats / footer ---------- */
 .stats{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px}
 .stat{background:var(--panel);border:1px solid var(--line-soft);border-radius:12px;padding:13px 18px;display:flex;flex-direction:column;gap:2px;flex:1;min-width:120px}
-.stat .n{font-family:'Chakra Petch';font-weight:700;font-size:24px;line-height:1}
+.stat .n{font-family:'Chakra Petch';font-weight:700;font-size:20px;line-height:1}
 .stat .l{font-size:11px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase}
 .stat.accent .n{color:var(--accent)}
 footer{text-align:center;color:var(--text-faint);font-size:12.5px;padding:30px 20px 50px;line-height:1.7}
@@ -259,7 +265,7 @@ footer b{color:var(--text-dim)}
 .empty-state{text-align:center;color:var(--text-faint);padding:60px 20px;font-size:15px}
 
 /* ---------- Responsive ---------- */
-@media(max-width:760px){
+@media(max-width:850px){
   .head-inner{padding:11px 14px;gap:12px}
   .brand-text p{display:none}
   .head-tools{width:100%;margin-left:0}
@@ -292,7 +298,7 @@ footer b{color:var(--text-dim)}
 <header>
   <div class="head-inner">
     <div class="brand">
-      <img class="logo-img" src="Icons/MSR.png" alt="MSR logo">
+      <img class="logo-img" src="Images/Icons/MSR.png" alt="MSR logo">
       <div class="brand-text">
         <h1>Minecraft Server Ranked</h1>
         <p>Competitive PvP Tier Testing</p>
@@ -373,7 +379,7 @@ function buildRegionFilter(){
 
 function buildTabs(){
   const tabs=document.getElementById("tabs");
-  let html=`<button class="tab ${activeTab==="overall"?"active":""}" data-tab="overall"><span class="ic"><img src='Icons/Trophy.png' style='height:1em; vertical-align: middle; transform:scale(3.5) translateY(-2px);'></span><span class="lb">Overall</span></button>`;
+  let html=`<button class="tab ${activeTab==="overall"?"active":""}" data-tab="overall"><span class="ic"><img src='Images/Icons/Trophy.png' style='height:1em; vertical-align: middle; transform:scale(3.5) translateY(-2px);'></span><span class="lb">Overall</span></button>`;
   GAMEMODES.forEach(g=>{ html+=`<button class="tab ${activeTab===g.id?"active":""}" data-tab="${g.id}"><span class="ic">${g.icon}</span><span class="lb">${g.name}</span></button>`; });
   tabs.innerHTML=html;
   tabs.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{activeTab=b.dataset.tab;buildTabs();render();});
@@ -410,7 +416,7 @@ function renderOverall(){
       ${avatar(p.name)}
       <div class="pinfo">
         <div class="pname">${p.name} ${p.region?`<span class="region">${p.region}</span>`:""}</div>
-        <div class="ptitle">${accoladeIcon(t)}<span class="acc-name">${t.name}</span><span class="pts">(${x.total} points)</span></div>
+        <div class="points" style="color:${t.color}">${x.total}<small> PTS</small></div>
       </div>
       <div class="pright">
         <div class="gm-strip">${chips}</div>
@@ -445,7 +451,7 @@ function openPlayer(name){
   const p=PLAYERS.find(x=>x.name===name);if(!p)return;
   const total=playerTotal(p),t=titleFor(total);
   const rank=PLAYERS.map(x=>({n:x.name,tot:playerTotal(x)})).sort((a,b)=>b.tot-a.tot).findIndex(x=>x.n===name)+1;
-  const tiers=GAMEMODES.filter(g=>p.tiers[g.id]).map(g=>{const tr=p.tiers[g.id];return `<div class="mtier"><span class="mt-gm"><span class="ic">${g.icon}</span>${g.name}</span><span class="mt-pts">${tierPoints(tr)} pts</span>${tierBadge(tr)}</div>`;}).join("")||`<div class="col-empty">No tiers recorded yet.</div>`;
+  const tiers=GAMEMODES.filter(g=>p.tiers[g.id]).map(g=>{const tr=p.tiers[g.id];return `<div class="mtier"><span class="mt-gm"><span class="ic">${g.icon}</span><span class="mt-gn">${g.name}</span></span><span class="mt-pts">${tierPoints(tr)} pts</span>${tierBadge(tr)}</div>`;}).join("")||`<div class="col-empty">No tiers recorded yet.</div>`;
   document.getElementById("modal").innerHTML=`
     <button class="close-x" onclick="closeModal()">✕</button>
     <div class="modal-head">${avatar(p.name)}
@@ -464,6 +470,22 @@ function bindRows(){document.querySelectorAll("[data-player]").forEach(el=>el.on
 function render(){activeTab==="overall"?renderOverall():renderGamemode(activeTab);}
 document.getElementById("search").oninput=e=>{query=e.target.value.trim().toLowerCase();render();};
 document.getElementById("regionFilter").onchange=e=>{region=e.target.value;render();};
+
+/* Handle tab bar fade on scroll (Overall view only) */
+let lastScrollY = window.scrollY;
+window.addEventListener("scroll", () => {
+  const bar = document.querySelector(".tabs-bar");
+  if (!bar) return;
+  if (activeTab !== "overall") { bar.classList.remove("is-hidden"); return; }
+  
+  const currentScrollY = window.scrollY;
+  if (currentScrollY > lastScrollY && currentScrollY > 120) {
+    bar.classList.add("is-hidden");
+  } else {
+    bar.classList.remove("is-hidden");
+  }
+  lastScrollY = currentScrollY;
+}, { passive: true });
 
 /* ---- load data.json, then build the UI ---- */
 async function init(){
