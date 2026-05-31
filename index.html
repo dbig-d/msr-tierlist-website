@@ -207,6 +207,14 @@ main{max-width:1200px;margin:0 auto;padding:26px 20px 60px}
 .gm-orb.t4{border-color:color-mix(in srgb,var(--t4) 60%,transparent)} .gm-t.t4{color:var(--t4)}
 .gm-orb.t5{border-color:color-mix(in srgb,var(--t5) 55%,transparent)} .gm-t.t5{color:var(--t5)}
 
+/* retired / peak tiers — grayed out (no coloured ring) */
+.gm-orb.retired{border-color:#39434f!important;background:radial-gradient(circle at 50% 32%,#232a33,#0c0f14)!important}
+.gm-orb.retired .ic img{filter:grayscale(.92) brightness(.74)}
+.gm-t.retired{color:var(--text-faint)!important}
+.entry-retired{opacity:.6}
+.entry-retired .avatar img{filter:grayscale(.85)}
+.mt-tag{font-size:9px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--text-faint);border:1px solid var(--line);border-radius:5px;padding:2px 5px;flex-shrink:0}
+
 /* tier badge (used in the player modal) */
 .tb{font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:11px;letter-spacing:.3px;padding:2px 7px;border-radius:5px;line-height:1.4;white-space:nowrap}
 .tb.ht{color:#000000}
@@ -293,6 +301,13 @@ footer b{color:var(--text-dim)}
   .cols{grid-auto-columns:minmax(140px,76%)}
 }
 @media(max-width:430px){.pname{font-size:15px}.avatar{width:38px;height:38px}}
+/* ---------- Hover tooltip ---------- */
+#tip{position:fixed;z-index:200;pointer-events:none;opacity:0;transform:translateY(4px);transition:opacity .13s ease,transform .13s ease;background:linear-gradient(180deg,#16243a,#0d1524);border:1px solid var(--line);border-radius:9px;padding:7px 11px;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,.5)}
+#tip.show{opacity:1;transform:translateY(0)}
+#tip .tip-t{display:block;font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:13px;color:var(--text);letter-spacing:.3px;white-space:nowrap}
+#tip .tip-s{display:block;font-size:11px;color:var(--text-dim);margin-top:2px;white-space:nowrap}
+#tip::after{content:"";position:absolute;left:50%;top:100%;transform:translateX(-50%);border:5px solid transparent;border-top-color:#0d1524}
+#tip.below::after{top:auto;bottom:100%;border-top-color:transparent;border-bottom-color:#16243a}
 </style>
 </head>
 <body>
@@ -350,18 +365,25 @@ let GAMEMODES, PLAYERS, POINTS, TITLES, GM;
    ============================================================================ */
 const TIER_ORDER = ["HT1","LT1","HT2","LT2","HT3","LT3","HT4","LT4","HT5","LT5"];
 
-const tierPoints = t => POINTS[t] || 0;
-const tierDigit  = t => t.slice(-1);
-const tierKind   = t => t.slice(0,2).toLowerCase();
-const playerTotal = p => Object.values(p.tiers).reduce((s,t)=>s+tierPoints(t),0);
+/* a tier placement can be a string "HT3" OR an object {tier:"HT3",retired:true,peak:true} */
+const tierCode  = v => (typeof v==="string") ? v : (v ? v.tier : v);
+const tierInfo  = v => (typeof v==="string") ? {tier:v,retired:false,peak:false}
+                                             : {tier:v.tier,retired:!!v.retired,peak:!!v.peak};
+const tierPoints = v => POINTS[tierCode(v)] || 0;
+const tierDigit  = t => tierCode(t).slice(-1);
+const tierKind   = t => tierCode(t).slice(0,2).toLowerCase();
+const playerTotal = p => Object.values(p.tiers).reduce((s,v)=>s+tierPoints(v),0);
 const titleFor = pts => TITLES.find(t=>pts>=t.min);
+const tierState = info => info.retired ? "Retired Tier" : (info.peak ? "Peak Tier" : "Tier");
 
 function tierBadge(t){ return `<span class="tb t${tierDigit(t)} ${tierKind(t)}">${t}</span>`; }
 
 /* one player tier as a stacked tile: gamemode orb on top, tier label below */
-function gmTile(g, tier){
-  const d = tierDigit(tier);
-  return `<span class="gm-tile" title="${g.name}: ${tier}"><span class="gm-orb t${d}"><span class="ic">${g.icon}</span></span><span class="gm-t t${d}">${tier}</span></span>`;
+function gmTile(g, val){
+  const info=tierInfo(val), d=info.tier.slice(-1);
+  const rc=(info.retired||info.peak)?" retired":"";
+  const sub=`${info.tier} · ${tierPoints(info.tier)} points`;
+  return `<span class="gm-tile" data-tip-title="${tierState(info)}" data-tip-sub="${sub}"><span class="gm-orb t${d}${rc}"><span class="ic">${g.icon}</span></span><span class="gm-t t${d}${rc}">${info.tier}</span></span>`;
 }
 
 /* accolade/title emblem. If a title has an "icon" in data.json it's used;
@@ -444,15 +466,15 @@ function renderOverall(){
 function renderGamemode(gid){
   const g=GM[gid];
   const byTier=Object.fromEntries(TIER_ORDER.map(t=>[t,[]]));
-  PLAYERS.forEach(p=>{const t=p.tiers[gid];if(t&&byTier[t]&&matchPlayer(p))byTier[t].push(p);});
-  Object.values(byTier).forEach(a=>a.sort((x,y)=>x.name.localeCompare(y.name)));
+  PLAYERS.forEach(p=>{const v=p.tiers[gid]; if(!v||!matchPlayer(p))return; const info=tierInfo(v); if(byTier[info.tier]) byTier[info.tier].push({p,info});});
+  Object.values(byTier).forEach(a=>a.sort((x,y)=>x.p.name.localeCompare(y.p.name)));
   const total=PLAYERS.filter(p=>p.tiers[gid]).length;
 
   let html=`<div class="view-title"><h2>${g.icon} ${g.name}</h2><span class="sub">Tier list</span></div>
   <div class="view-meta">${total} player${total!==1?"s":""} tested in ${g.name}</div><div class="cols">`;
   TIER_ORDER.forEach((t,i)=>{
     const d=tierDigit(t),list=byTier[t];
-    const body=list.length?list.map(p=>`<div class="entry" data-player="${encodeURIComponent(p.name)}">${avatar(p.name)}<span class="en">${p.name}</span>${p.region?`<span class="region er">${p.region}</span>`:""}</div>`).join(""):`<div class="col-empty">—</div>`;
+    const body=list.length?list.map(it=>{const p=it.p,info=it.info;const sub=`${info.tier} · ${tierPoints(info.tier)} points`;const rc=(info.retired||info.peak)?" entry-retired":"";return `<div class="entry${rc}" data-player="${encodeURIComponent(p.name)}" data-tip-title="${tierState(info)}" data-tip-sub="${sub}">${avatar(p.name)}<span class="en">${p.name}</span>${p.region?`<span class="region er">${p.region}</span>`:""}</div>`;}).join(""):`<div class="col-empty">—</div>`;
     html+=`<div class="col t${d}" style="animation-delay:${i*28}ms"><div class="col-head">${t}<span class="ct">${tierPoints(t)} PTS</span></div><div class="col-body">${body}</div></div>`;
   });
   html+=`</div>`;
@@ -464,7 +486,7 @@ function openPlayer(name){
   const p=PLAYERS.find(x=>x.name===name);if(!p)return;
   const total=playerTotal(p),t=titleFor(total);
   const rank=PLAYERS.map(x=>({n:x.name,tot:playerTotal(x)})).sort((a,b)=>b.tot-a.tot).findIndex(x=>x.n===name)+1;
-  const tiers=GAMEMODES.filter(g=>p.tiers[g.id]).map(g=>{const tr=p.tiers[g.id];return `<div class="mtier"><span class="mt-gm"><span class="ic">${g.icon}</span><span class="mt-gn">${g.name}</span></span><span class="mt-pts">${tierPoints(tr)} pts</span>${tierBadge(tr)}</div>`;}).join("")||`<div class="col-empty">No tiers recorded yet.</div>`;
+  const tiers=GAMEMODES.filter(g=>p.tiers[g.id]).map(g=>{const info=tierInfo(p.tiers[g.id]);const tag=info.retired?`<span class="mt-tag">Retired</span>`:(info.peak?`<span class="mt-tag">Peak</span>`:"");return `<div class="mtier"><span class="mt-gm"><span class="ic">${g.icon}</span><span class="mt-gn">${g.name}</span></span><span class="mt-pts">${tierPoints(info.tier)} pts</span>${tag}${tierBadge(info.tier)}</div>`;}).join("")||`<div class="col-empty">No tiers recorded yet.</div>`;
   document.getElementById("modal").innerHTML=`
     <button class="close-x" onclick="closeModal()">✕</button>
     <div class="modal-head">${avatar(p.name)}
@@ -494,6 +516,23 @@ function render(){
 }
 document.getElementById("search").oninput=e=>{query=e.target.value.trim().toLowerCase();render();};
 document.getElementById("regionFilter").onchange=e=>{region=e.target.value;render();};
+
+/* ---- hover tooltip for tiers (works in Overall, gamemode columns, scroll-safe) ---- */
+const tipEl=document.createElement("div");tipEl.id="tip";document.body.appendChild(tipEl);
+function showTip(el){
+  tipEl.innerHTML=`<span class="tip-t">${el.dataset.tipTitle}</span><span class="tip-s">${el.dataset.tipSub}</span>`;
+  tipEl.classList.add("show");
+  const r=el.getBoundingClientRect(),tr=tipEl.getBoundingClientRect();
+  let left=Math.max(8,Math.min(r.left+r.width/2-tr.width/2,window.innerWidth-tr.width-8));
+  let top=r.top-tr.height-9,below=false;
+  if(top<8){top=r.bottom+9;below=true;}
+  tipEl.classList.toggle("below",below);
+  tipEl.style.left=left+"px";tipEl.style.top=top+"px";
+}
+function hideTip(){tipEl.classList.remove("show");}
+document.addEventListener("mouseover",e=>{const el=e.target.closest("[data-tip-title]");if(el)showTip(el);});
+document.addEventListener("mouseout",e=>{const el=e.target.closest("[data-tip-title]");if(el&&!el.contains(e.relatedTarget))hideTip();});
+window.addEventListener("scroll",hideTip,{passive:true});
 
 /* Handle tab bar fade on scroll (Overall view only) */
 let lastScrollY = window.scrollY;
