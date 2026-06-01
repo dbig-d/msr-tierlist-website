@@ -562,7 +562,10 @@
           "tier": "LT1",
           "retired": true
         },
-        "axe": "HT1",
+        "axe": {
+          "tier": "HT1",
+          "retired": true
+        },
         "crystal": "HT3",
         "mace": "LT1"
       }
