@@ -516,7 +516,10 @@
           "tier": "LT1",
           "retired": true
         },
-        "npot": "LT1",
+        "npot": {
+          "tier": "LT1",
+          "retired": true
+        },
         "crystal": {
           "tier": "LT1",
           "retired": true
