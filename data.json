@@ -514,7 +514,10 @@
           "retired": true
         },
         "npot": "LT1",
-        "crystal": "LT1",
+        "crystal": {
+          "tier": "LT1",
+          "retired": true
+        },
         "mace": "LT1",
         "sword": {
           "tier": "HT1",
