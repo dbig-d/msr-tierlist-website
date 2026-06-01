@@ -124,6 +124,14 @@ select{
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238aa0bb' stroke-width='3'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
   background-repeat:no-repeat;background-position:right 11px center;
 }
+.tool-btn{
+  background:var(--panel); border:1px solid var(--line); border-radius:9px;
+  width:32px; height:32px; display:grid; place-items:center; color:var(--text-dim);
+  transition:.18s; flex-shrink: 0;
+}
+.tool-btn:hover{ border-color:var(--accent); color:var(--text); }
+.tool-btn svg{ width:16px; height:16px; }
+
 select:focus{border-color:var(--accent)}
 
 /* ---------- Tabs ---------- */
@@ -276,6 +284,7 @@ main{max-width:1200px;margin:0 auto;padding:26px 20px 60px}
 .modal-head .mh-info .mtitle .acc-ic{width:18px;height:18px;flex:0 0 auto}
 .modal-head .mh-info .mmeta{font-size:13px;color:var(--text-dim);margin-top:7px;display:flex;gap:14px;flex-wrap:wrap}
 .modal-head .mh-info .mmeta b{color:var(--text);font-family:'Chakra Petch'}
+.modal-body .acc-ic{width:22px;height:22px;flex-shrink:0}
 .close-x{position:absolute;top:14px;right:14px;width:32px;height:32px;border-radius:8px;display:grid;place-items:center;background:var(--panel-2);border:1px solid var(--line);font-size:18px;color:var(--text-dim);transition:.15s}
 .close-x:hover{color:var(--text);border-color:var(--accent)}
 .modal-body{padding:18px 24px 26px}
@@ -349,6 +358,9 @@ footer b{color:var(--text-dim)}
       </div>
     </div>
     <div class="head-tools">
+      <button class="tool-btn" id="infoBtn" title="Information">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+      </button>
       <div class="search-wrap">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
         <input type="search" id="search" placeholder="Search player…" autocomplete="off">
@@ -520,6 +532,108 @@ function renderGamemode(gid){
   bindRows();
 }
 
+function openInfo(tab) {
+  if(!POINTS || !TITLES) return;
+  if(typeof tab!=='string')tab='system';
+  const isSys=tab==='system', isPts=tab==='points', isTit=tab==='titles', isTst=tab==='testing', isRet=tab==='retirement', isTrn=tab==='tournaments', isSub=tab==='subtiers';
+  
+  const tabsHtml=`<div style="display:flex;gap:18px;margin-top:12px;border-bottom:1px solid var(--line-soft);overflow-x:auto;scrollbar-width:none">
+    <button onclick="openInfo('system')" style="padding-bottom:8px;font-size:13px;font-weight:600;white-space:nowrap;color:${isSys?'var(--accent)':'var(--text-dim)'};border-bottom:2px solid ${isSys?'var(--accent)':'transparent'};transition:0.2s">System</button>
+    <button onclick="openInfo('points')" style="padding-bottom:8px;font-size:13px;font-weight:600;white-space:nowrap;color:${isPts?'var(--accent)':'var(--text-dim)'};border-bottom:2px solid ${isPts?'var(--accent)':'transparent'};transition:0.2s">Points</button>
+    <button onclick="openInfo('titles')" style="padding-bottom:8px;font-size:13px;font-weight:600;white-space:nowrap;color:${isTit?'var(--accent)':'var(--text-dim)'};border-bottom:2px solid ${isTit?'var(--accent)':'transparent'};transition:0.2s">Titles</button>
+    <button onclick="openInfo('testing')" style="padding-bottom:8px;font-size:13px;font-weight:600;white-space:nowrap;color:${isTst?'var(--accent)':'var(--text-dim)'};border-bottom:2px solid ${isTst?'var(--accent)':'transparent'};transition:0.2s">Testing</button>
+    <button onclick="openInfo('subtiers')" style="padding-bottom:8px;font-size:13px;font-weight:600;white-space:nowrap;color:${isSub?'var(--accent)':'var(--text-dim)'};border-bottom:2px solid ${isSub?'var(--accent)':'transparent'};transition:0.2s">Sub Tiers</button>
+    <button onclick="openInfo('retirement')" style="padding-bottom:8px;font-size:13px;font-weight:600;white-space:nowrap;color:${isRet?'var(--accent)':'var(--text-dim)'};border-bottom:2px solid ${isRet?'var(--accent)':'transparent'};transition:0.2s">Retirement</button>
+    <button onclick="openInfo('tournaments')" style="padding-bottom:8px;font-size:13px;font-weight:600;white-space:nowrap;color:${isTrn?'var(--accent)':'var(--text-dim)'};border-bottom:2px solid ${isTrn?'var(--accent)':'transparent'};transition:0.2s">Tournaments</button>
+  </div>`;
+  
+  let bodyHtml = '';
+  if(isSys) {
+    bodyHtml = `<div style="line-height:1.6;color:var(--text-dim);font-size:14px">
+      <p style="margin-bottom:12px"><b>MSR</b> provides an aggregate ranking system across multiple gamemodes. Your overall position is determined by the sum of points from each tier placement.</p>
+      <p>Testing is conducted by official staff members to ensure quality and consistency across the board.</p>
+    </div>`;
+  } else if(isPts) {
+    bodyHtml = `<h4 style="color:var(--text);margin-bottom:12px">Tier Point Values</h4>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:8px">${TIER_ORDER.map(t=>`<div style="display:flex;justify-content:space-between;padding:4px 8px;background:var(--bg-2);border-radius:6px;border:1px solid var(--line-soft)"><b>${t}</b><span>${POINTS[t]||0}</span></div>`).join('')}</div>`;
+  } else if(isTit) {
+    bodyHtml = `<h4 style="color:var(--text);margin-bottom:12px">Achievement Titles</h4>
+    <div style="display:flex;flex-direction:column;gap:8px">${TITLES.map(t=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:var(--bg-2);border-radius:12px;border:1px solid var(--line-soft)">
+      <div style="display:flex;align-items:center;gap:12px">${accoladeIcon(t)}<b style="color:${t.color};font-size:16px">${t.name}</b></div>
+      <span style="font-size:13px;font-weight:700;color:var(--text-faint);font-family:'Chakra Petch'">${t.min}+ PTS</span>
+    </div>`).join('')}</div>`;
+  } else if(isTst) {
+    bodyHtml = `<div style="line-height:1.6;color:var(--text-dim);font-size:14px">
+      <h4 style="color:var(--text);margin-bottom:4px">How to get tested?</h4>
+      <p style="margin-bottom:10px">Request tests via <b>xqste</b> (xqste_ on discord). Availability depends on tester activity. Follow all instructions to ensure accuracy.</p>
+      <h4 style="color:var(--text);margin-bottom:4px">AU Testing Servers</h4>
+      <div style="margin-bottom:12px;font-size:13px">
+        <div style="color:#f5b73c">• mcpvp.club (Not Recommended)</div>
+        <div style="color:#f5b73c">• oceanias.net (KB not synced to ping)</div>
+        <div style="color:#54c66b">• au.catpvp.xyz (Recommended)</div>
+        <div style="color:#54c66b">• oceprestige.net (Recommended)</div>
+      </div>
+      <h4 style="color:var(--text);margin-bottom:4px">Test Types</h4>
+      <p style="margin-bottom:6px"><b>LT Tests:</b> Awards up to HT4. For unranked or retesting.</p>
+      <p style="margin-bottom:10px"><b>HT Tests:</b> For LT3+. Defeat same-tier players and benchmark players.</p>
+      <h4 style="color:var(--text);margin-bottom:4px">Testers</h4>
+      <p style="font-size:13px"><b>xqste:</b> Any gamemode & Sub Tiers.<br><b>cricketrulz0000:</b> Any gamemode (excl. sub tiers unless dedicated).</p>
+    </div>`;
+  } else if(isSub) {
+    bodyHtml = `<div style="line-height:1.6;color:var(--text-dim);font-size:14px">
+      <h4 style="color:var(--text);margin-bottom:4px">Sub Tiers Overview</h4>
+      <p style="margin-bottom:10px">Optional, fun-focused tiers featuring creative gamemodes. These do <b>not</b> affect overall MSR rankings and exist for experimental competition and enjoyment.</p>
+      <h4 style="color:var(--text);margin-bottom:4px">Testing Process</h4>
+      <p style="margin-bottom:10px">Request tests via Sub Tier Testers (contact <b>xqste</b> for info). Standardized formats ensure accuracy; follow all tester instructions.</p>
+      <h4 style="color:var(--text);margin-bottom:4px">Gamemodes</h4>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
+        <span style="padding:2px 8px;background:var(--bg-2);border:1px solid var(--line-soft);border-radius:6px">🛒 Cart</span>
+        <span style="padding:2px 8px;background:var(--bg-2);border:1px solid var(--line-soft);border-radius:6px">💥 Creeper</span>
+        <span style="padding:2px 8px;background:var(--bg-2);border:1px solid var(--line-soft);border-radius:6px">🔥 Fireball</span>
+        <span style="padding:2px 8px;background:var(--bg-2);border:1px solid var(--line-soft);border-radius:6px">❄️ Spleef</span>
+        <span style="padding:2px 8px;background:var(--bg-2);border:1px solid var(--line-soft);border-radius:6px">🔱 Trident</span>
+        <span style="padding:2px 8px;background:var(--bg-2);border:1px solid var(--line-soft);border-radius:6px">👁️ Pearl</span>
+      </div>
+      <h4 style="color:var(--text);margin-bottom:4px">Sub Tier Testers</h4>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 12px;font-size:13px">
+        <div><b>xqste</b> — Cart 🛒</div>
+        <div><b>__bigd</b> — Pearl Fight 👁️</div>
+        <div><b>__synn</b> — Fireball Fight 🔥</div>
+        <div><b>D2ck000</b> — Creeper 💣</div>
+        <div><b>Jaynaka15</b> — Spleef ❄️</div>
+        <div><b>cricketrlz</b> — Trident 🔱</div>
+      </div>
+    </div>`;
+  } else if(isRet) {
+    bodyHtml = `<div style="line-height:1.6;color:var(--text-dim);font-size:14px">
+      <h4 style="color:var(--text);margin-bottom:8px">Retirement Rules</h4>
+      <p style="margin-bottom:12px">Retiring removes you from active lists but saves progress. You cannot test while retired. Notify managers to initiate retirement.</p>
+      <h4 style="color:var(--text);margin-bottom:8px">Unretirement Test</h4>
+      <p style="margin-bottom:8px">To return, fight at least one player from your retired tier, the tier above, and the tier below. If a tier is empty, fight the closest available beneath.</p>
+    </div>`;
+  } else if(isTrn) {
+    bodyHtml = `<div style="line-height:1.6;color:var(--text-dim);font-size:14px">
+      <h4 style="color:var(--text);margin-bottom:4px">MSR Tournaments – Overview</h4>
+      <p style="margin-bottom:10px">MSR Tournaments are official competitive events held periodically (typically school holidays). Players compete individually while contributing to their <b>House</b>'s overall points.</p>
+      <h4 style="color:var(--text);margin-bottom:4px">Tournament Format</h4>
+      <p style="margin-bottom:6px">Bracket structure via <b>Challenge</b>: Standard Matches ➔ Quarter Finals ➔ Semi Finals ➔ Final.</p>
+      <h4 style="color:var(--text);margin-bottom:4px">Gamemodes & Rules</h4>
+      <p style="margin-bottom:6px">Variety of kits used to ensure balanced competition. Match round requirements align with <b>HT3+ standards</b> for fairness.</p>
+      <h4 style="color:var(--text);margin-bottom:4px">House Integration</h4>
+      <p style="margin-bottom:8px">Wins contribute points to House Leaderboards and Championships based on the stage reached.</p>
+      <p><i>Schedules and specific kit rules are announced prior to each event.</i></p>
+    </div>`;
+  }
+
+  document.getElementById("modal").innerHTML=`<button class="close-x" onclick="closeModal()">✕</button>
+    <div class="modal-head" style="flex-direction:column;align-items:flex-start;gap:0;padding-bottom:0">
+      <div class="mh-info"><h3 style="font-size:20px">Information</h3></div>
+      ${tabsHtml}
+    </div>
+    <div class="modal-body">${bodyHtml}</div>`;
+  document.getElementById("modalBg").classList.add("open");
+}
+
 function openPlayer(name){
   const p=PLAYERS.find(x=>x.name===name);if(!p)return;
   const total=playerTotal(p),t=titleFor(total);
@@ -538,6 +652,7 @@ function openPlayer(name){
 function closeModal(){document.getElementById("modalBg").classList.remove("open");}
 document.getElementById("modalBg").onclick=e=>{if(e.target.id==="modalBg")closeModal();};
 document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal();});
+document.getElementById("infoBtn").onclick = openInfo;
 function bindRows(){document.querySelectorAll("[data-player]").forEach(el=>el.onclick=()=>openPlayer(decodeURIComponent(el.dataset.player)));}
 
 function render(){
