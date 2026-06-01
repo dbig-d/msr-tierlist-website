@@ -556,7 +556,10 @@
       "name": "Henrry999",
       "region": "",
       "tiers": {
-        "dsmp": "LT1",
+        "dsmp": {
+          "tier": "LT1",
+          "retired": true
+        },
         "uhc": {
           "tier": "LT1",
           "retired": true
