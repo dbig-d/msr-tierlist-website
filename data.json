@@ -504,7 +504,10 @@
       "name": "MrP3nguin_",
       "region": "",
       "tiers": {
-        "dsmp": "HT1",
+        "dsmp": {
+          "tier": "HT1",
+          "retired": true
+        },
         "uhc": {
           "tier": "HT2",
           "retired": true
