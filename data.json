@@ -557,7 +557,10 @@
       "region": "",
       "tiers": {
         "dsmp": "LT1",
-        "uhc": "LT1",
+        "uhc": {
+          "tier": "LT1",
+          "retired": true
+        },
         "sword": {
           "tier": "LT1",
           "retired": true
