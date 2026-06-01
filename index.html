@@ -133,7 +133,14 @@ select:focus{border-color:var(--accent)}
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
  }
  .tabs-bar.is-hidden{transform:translateY(-100%);opacity:0;pointer-events:none}
-.tabs{max-width:1200px;margin:0 auto;padding:0 12px;display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;justify-content:safe center}
+
+ /* View Transitions: Smoothly transition the content area when switching tabs */
+ #content { view-transition-name: tab-content; }
+ ::view-transition-old(tab-content) { animation: 150ms ease-in both fade-out; }
+ ::view-transition-new(tab-content) { animation: 300ms ease-out both rise; }
+ @keyframes fade-out { to { opacity: 0; } }
+
+.tabs{position:relative;max-width:1200px;margin:0 auto;padding:0 12px;display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;justify-content:safe center}
 .tabs::-webkit-scrollbar{display:none}
 .tab{
   flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:7px;
@@ -141,12 +148,22 @@ select:focus{border-color:var(--accent)}
   color:var(--text-dim);white-space:nowrap;border-bottom:2px solid transparent;
   border-radius:12px 12px 0 0;transition:.16s;
 }
+
+.tab-indicator {
+  position: absolute;
+  bottom: 0;
+  height: 2px;
+  background: var(--accent);
+  pointer-events: none;
+  view-transition-name: active-tab-indicator;
+}
+
 .tab .ic{font-size:24px;line-height:1;opacity:.82;transition:.16s}
 .tab .ic img{opacity:1; filter:none;}
 .tab .lb{line-height:1}
 .tab:hover{color:var(--text)}
 .tab:hover .ic{opacity:1}
-.tab.active{color:var(--text);background:linear-gradient(180deg,var(--panel),rgba(16,26,43,0));border-bottom-color:var(--accent)}
+.tab.active{color:var(--text);background:linear-gradient(180deg,var(--panel),rgba(16,26,43,0))}
 .tab.active .ic{opacity:1}
 
 /* ---------- Main ---------- */
@@ -416,8 +433,29 @@ function buildTabs(){
   const tabs=document.getElementById("tabs");
   let html=`<button class="tab ${activeTab==="overall"?"active":""}" data-tab="overall"><span class="ic"><img src='Images/Icons/Trophy.png' style='height:1em; vertical-align: middle; transform:scale(3.5) translateY(-2px);'></span><span class="lb">Overall</span></button>`;
   GAMEMODES.forEach(g=>{ html+=`<button class="tab ${activeTab===g.id?"active":""}" data-tab="${g.id}"><span class="ic">${g.icon}</span><span class="lb">${g.name}</span></button>`; });
+  html += `<div class="tab-indicator"></div>`;
   tabs.innerHTML=html;
-  tabs.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{activeTab=b.dataset.tab;buildTabs();render();});
+
+  const activeBtn = tabs.querySelector(".tab.active");
+  const indicator = tabs.querySelector(".tab-indicator");
+  if (activeBtn && indicator) {
+    indicator.style.left = activeBtn.offsetLeft + "px";
+    indicator.style.width = activeBtn.offsetWidth + "px";
+  }
+
+  tabs.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{
+    const updateUI = () => {
+      activeTab = b.dataset.tab;
+      buildTabs();
+      render();
+    };
+    // Use View Transitions API if supported, otherwise fallback to standard update
+    if (document.startViewTransition) {
+      document.startViewTransition(updateUI);
+    } else {
+      updateUI();
+    }
+  });
 }
 
 function matchPlayer(p){
@@ -549,6 +587,8 @@ window.addEventListener("scroll", () => {
   }
   lastScrollY = currentScrollY;
 }, { passive: true });
+
+window.addEventListener("resize", buildTabs);
 
 /* ---- load data.json, then build the UI ---- */
 async function init(){
