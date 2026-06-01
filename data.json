@@ -518,7 +518,10 @@
           "tier": "LT1",
           "retired": true
         },
-        "mace": "LT1",
+        "mace": {
+          "tier": "LT1",
+          "retired": true
+        },
         "sword": {
           "tier": "HT1",
           "retired": true
