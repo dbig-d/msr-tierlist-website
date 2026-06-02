@@ -104,6 +104,7 @@
     {
       "name": "cricketrlz0000",
       "region": "",
+      "premium": true,
       "tiers": {
         "sword": "LT1",
         "axe": "LT1",
@@ -120,6 +121,7 @@
     {
       "name": "Brojules",
       "region": "",
+      "premium": true,
       "tiers": {
         "sword": "LT1",
         "axe": "HT3",
@@ -136,6 +138,7 @@
     {
       "name": "xqste",
       "region": "",
+      "premium": true,
       "tiers": {
         "sword": "LT1",
         "axe": "LT1",
@@ -178,6 +181,7 @@
     {
       "name": "__synn",
       "region": "",
+      "premium": true,
       "tiers": {
         "sword": "LT1",
         "axe": "HT3",
@@ -205,6 +209,7 @@
     {
       "name": "Piqt",
       "region": "",
+      "premium": true,
       "tiers": {
         "sword": "LT2",
         "axe": "LT1",
@@ -221,6 +226,7 @@
     {
       "name": "_knife__",
       "region": "",
+      "premium": true,
       "tiers": {
         "sword": "LT2",
         "axe": "LT4",
@@ -237,6 +243,7 @@
     {
       "name": "__bigd",
       "region": "",
+      "premium": true,
       "tiers": {
         "sword": "HT2",
         "axe": "HT3",
@@ -253,6 +260,7 @@
     {
       "name": "Velox2102",
       "region": "",
+      "premium": true,
       "tiers": {
         "sword": "LT2",
         "axe": "HT4",
@@ -297,6 +305,7 @@
     {
       "name": "D2ck000",
       "region": "",
+      "premium": true,
       "tiers": {
         "sword": "LT3",
         "axe": "HT4",
@@ -313,6 +322,7 @@
     {
       "name": "CoolIcee",
       "region": "",
+      "premium": true,
       "tiers": {
         "sword": "LT3",
         "axe": "HT3",
@@ -329,6 +339,7 @@
     {
       "name": "Gameories",
       "region": "",
+      "premium": true,
       "tiers": {
         "sword": "HT4",
         "axe": "LT3",
@@ -367,6 +378,7 @@
     {
       "name": "BigA_1",
       "region": "",
+      "premium": true,
       "tiers": {
         "sword": "LT3",
         "axe": "LT3",
@@ -400,6 +412,7 @@
     {
       "name": "bigmaclover2121",
       "region": "",
+      "premium": true,
       "tiers": {
         "sword": "LT4",
         "axe": "HT4",
@@ -412,6 +425,7 @@
     {
       "name": "ZzAsleepzZ",
       "region": "",
+      "premium": true,
       "tiers": {
         "sword": "LT4",
         "axe": "HT4",
@@ -430,6 +444,7 @@
     {
       "name": "epicddss",
       "region": "",
+      "premium": true,
       "tiers": {
         "axe": "LT2"
       }
@@ -437,6 +452,7 @@
     {
       "name": "StrongMan09",
       "region": "",
+      "premium": true,
       "tiers": {
         "axe": "LT4",
         "uhc": "LT4",
@@ -466,6 +482,7 @@
     {
       "name": "qonobo",
       "region": "",
+      "premium": true,
       "tiers": {
         "mace": "HT4",
         "dsmp": "LT4",
@@ -506,6 +523,7 @@
     {
       "name": "MrP3nguin_",
       "region": "",
+      "premium": true,
       "tiers": {
         "dsmp": {
           "tier": "HT1",
@@ -558,6 +576,7 @@
     {
       "name": "Henrry999",
       "region": "",
+      "premium": true,
       "tiers": {
         "dsmp": {
           "tier": "LT1",
