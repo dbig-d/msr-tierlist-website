@@ -132,6 +132,11 @@ select{
 .tool-btn:hover{ border-color:var(--accent); color:var(--text); }
 .tool-btn svg{ width:16px; height:16px; }
 
+.filter-chip{display:flex;align-items:center;gap:7px;background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:8px 11px;font-size:13px;font-weight:600;color:var(--text-dim);white-space:nowrap;transition:.16s;flex-shrink:0}
+.filter-chip svg{width:15px;height:15px;flex-shrink:0}
+.filter-chip:hover{color:var(--text);border-color:var(--accent)}
+.filter-chip.active{color:var(--accent);border-color:var(--accent);background:rgba(123,196,255,.12)}
+
 select:focus{border-color:var(--accent)}
 
 /* ---------- Tabs ---------- */
@@ -198,6 +203,7 @@ main{max-width:1200px;margin:0 auto;padding:26px 20px 60px}
 .row.top2 .rank{color:var(--t2)}
 .row.top3{border-color:rgba(203,126,71,.45)}
 .row.top3 .rank{color:var(--t3)}
+.row.premium{border-color:rgba(123,196,255,.5);box-shadow:0 0 0 1px rgba(123,196,255,.14), 0 6px 26px rgba(123,196,255,.09)}
 .rank small{display:block;font-size:9px;font-weight:600;letter-spacing:1px;color:var(--text-faint)}
 
 .avatar{position:relative;width:42px;height:42px;border-radius:8px;overflow:hidden;background:var(--panel-2);border:1px solid var(--line)}
@@ -371,6 +377,14 @@ footer b{color:var(--text-dim)}
         <input type="search" id="search" placeholder="Search player…" autocomplete="off">
       </div>
       <select id="regionFilter"><option value="">All Regions</option></select>
+      <button class="filter-chip" id="filterRetired" title="Hide fully-retired players (and retired tiers)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+        <span>Hide Retired</span>
+      </button>
+      <button class="filter-chip" id="filterPremium" title="Show premium members only">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <span>Premium</span>
+      </button>
     </div>
   </div>
 </header>
@@ -436,7 +450,8 @@ function avatar(name, cls=""){
     <span class="avatar-fallback">${init}</span></div>`;
 }
 
-let activeTab="overall", query="", region="";
+let activeTab="overall", query="", region="", hideRetired=false, premiumOnly=false;
+const isFullyRetired = p => {const v=Object.values(p.tiers); return v.length>0 && v.every(x=>tierInfo(x).retired);};
 
 /* region filter (auto-hides if no regions present) */
 function buildRegionFilter(){
@@ -478,13 +493,14 @@ function buildTabs(){
 function matchPlayer(p){
   if(region && p.region!==region) return false;
   if(query && !p.name.toLowerCase().includes(query)) return false;
+  if(premiumOnly && !p.premium) return false;
   return true;
 }
 
 function renderOverall(){
   const ranked=PLAYERS.map(p=>({p,total:playerTotal(p)}))
     .sort((a,b)=>b.total-a.total||a.p.name.localeCompare(b.p.name))
-    .map((x,i)=>({...x,rank:i+1})).filter(x=>matchPlayer(x.p));
+    .map((x,i)=>({...x,rank:i+1})).filter(x=>matchPlayer(x.p) && !(hideRetired && isFullyRetired(x.p)));
   const tp=PLAYERS.length, modes=GAMEMODES.length;
   const tested=PLAYERS.reduce((s,p)=>s+Object.keys(p.tiers).length,0);
 
@@ -499,7 +515,7 @@ function renderOverall(){
 
   html+=`<div class="board">`;
   ranked.forEach((x,idx)=>{
-    const p=x.p,t=titleFor(x.total),topCls=x.rank<=3?` top${x.rank}`:"";
+    const p=x.p,t=titleFor(x.total),topCls=x.rank<=3?` top${x.rank}`:(p.premium?" premium":"");
     const chips=GAMEMODES.filter(g=>p.tiers[g.id]).map(g=>gmTile(g,p.tiers[g.id])).join("");
     html+=`<div class="row${topCls}" style="animation-delay:${idx*18}ms" data-player="${encodeURIComponent(p.name)}">
       <div class="rank">${x.rank}${x.rank<=3?'<small>RANK</small>':''}</div>
@@ -521,9 +537,9 @@ function renderOverall(){
 function renderGamemode(gid){
   const g=GM[gid];
   const byTier=Object.fromEntries(TIER_ORDER.map(t=>[t,[]]));
-  PLAYERS.forEach(p=>{const v=p.tiers[gid]; if(!v||!matchPlayer(p))return; const info=tierInfo(v); if(byTier[info.tier]) byTier[info.tier].push({p,info});});
+  PLAYERS.forEach(p=>{const v=p.tiers[gid]; if(!v||!matchPlayer(p))return; const info=tierInfo(v); if(hideRetired&&info.retired)return; if(byTier[info.tier]) byTier[info.tier].push({p,info});});
   Object.values(byTier).forEach(a=>a.sort((x,y)=>x.p.name.localeCompare(y.p.name)));
-  const total=PLAYERS.filter(p=>p.tiers[gid]).length;
+  const total=Object.values(byTier).reduce((s,a)=>s+a.length,0);
 
   let html=`<div class="view-title"><h2>${g.icon} ${g.name}</h2><span class="sub">Tier list</span></div>
   <div class="view-meta">${total} player${total!==1?"s":""} tested in ${g.name}</div><div class="cols">`;
@@ -805,6 +821,12 @@ function render(){
 }
 document.getElementById("search").oninput=e=>{query=e.target.value.trim().toLowerCase();render();};
 document.getElementById("regionFilter").onchange=e=>{region=e.target.value;render();};
+
+/* ---- filter toggles (Hide Retired / Premium only) ---- */
+const retiredChip=document.getElementById("filterRetired");
+const premiumChip=document.getElementById("filterPremium");
+retiredChip.onclick=()=>{hideRetired=!hideRetired;retiredChip.classList.toggle("active",hideRetired);render();};
+premiumChip.onclick=()=>{premiumOnly=!premiumOnly;premiumChip.classList.toggle("active",premiumOnly);render();};
 
 /* ---- hover tooltip for tiers (works in Overall, gamemode columns, scroll-safe) ---- */
 const tipEl=document.createElement("div");tipEl.id="tip";document.body.appendChild(tipEl);
