@@ -238,9 +238,9 @@
       "name": "__bigd",
       "region": "",
       "tiers": {
-        "sword": "LT2",
+        "sword": "HT2",
         "axe": "HT3",
-        "uhc": "HT4",
+        "uhc": "HT3",
         "mace": "LT4",
         "crystal": "HT5",
         "dsmp": "LT3",
@@ -300,7 +300,7 @@
       "tiers": {
         "sword": "LT3",
         "axe": "HT4",
-        "uhc": "LT3",
+        "uhc": "HT4",
         "mace": "HT3",
         "crystal": "LT2",
         "dsmp": "HT4",
@@ -320,7 +320,10 @@
         "dsmp": "LT3",
         "nsmp": "LT3",
         "hsmp": "LT2",
-        "uhc": "LT2"
+        "uhc": {
+          "tier": "LT2",
+          "retired": true
+        }
       }
     },
     {
@@ -365,7 +368,7 @@
       "name": "BigA_1",
       "region": "",
       "tiers": {
-        "sword": "HT4",
+        "sword": "LT3",
         "axe": "LT3",
         "uhc": "HT4",
         "mace": "LT4"
