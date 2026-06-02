@@ -320,7 +320,10 @@
         "dsmp": "LT3",
         "nsmp": "LT3",
         "hsmp": "LT2",
-        "uhc": "LT2"
+        "uhc": {
+          "tier": "LT2",
+          "retired": true
+        }
       }
     },
     {
