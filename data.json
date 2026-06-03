@@ -489,7 +489,10 @@
           "tier": "LT4",
           "retired": true
         },
-        "sword": "HT5"
+        "sword": {
+          "tier": "HT5",
+          "retired": true
+        }
       }
     },
     {
