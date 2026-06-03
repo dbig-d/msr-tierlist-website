@@ -358,7 +358,10 @@
           "tier": "HT4",
           "retired": true
         },
-        "axe": "LT5"
+        "axe": {
+          "tier": "LT5",
+          "retired": true
+        }
       }
     },
     {
