@@ -484,7 +484,10 @@
       "name": "Bronzon155",
       "region": "",
       "tiers": {
-        "axe": "LT5",
+        "axe": {
+          "tier": "LT5",
+          "retired": true
+        },
         "dsmp": {
           "tier": "LT4",
           "retired": true
