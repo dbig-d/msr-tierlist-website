@@ -470,7 +470,10 @@
           "tier": "HT5",
           "retired": true
         },
-        "nsmp": "HT5",
+        "nsmp": {
+          "tier": "HT5",
+          "retired": true
+        },
         "sword": {
           "tier": "HT5",
           "retired": true
