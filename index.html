@@ -149,16 +149,9 @@ select:focus{border-color:var(--accent)}
 
  /* View Transitions: Smoothly transition the content area when switching tabs */
  #content { view-transition-name: tab-content; }
-
- .slide-left::view-transition-old(tab-content) { animation: 200ms ease-in both slide-to-left; }
- .slide-left::view-transition-new(tab-content) { animation: 350ms cubic-bezier(0, 0, 0.2, 1) both slide-from-right; }
- .slide-right::view-transition-old(tab-content) { animation: 200ms ease-in both slide-to-right; }
- .slide-right::view-transition-new(tab-content) { animation: 350ms cubic-bezier(0, 0, 0.2, 1) both slide-from-left; }
-
- @keyframes slide-to-left { to { transform: translateX(-40px); opacity: 0; } }
- @keyframes slide-from-right { from { transform: translateX(40px); opacity: 0; } }
- @keyframes slide-to-right { to { transform: translateX(40px); opacity: 0; } }
- @keyframes slide-from-left { from { transform: translateX(-40px); opacity: 0; } }
+ ::view-transition-old(tab-content) { animation: 150ms ease-in both fade-out; }
+ ::view-transition-new(tab-content) { animation: 300ms ease-out both rise; }
+ @keyframes fade-out { to { opacity: 0; } }
 
 .tabs{position:relative;max-width:1200px;margin:0 auto;padding:0 12px;display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;justify-content:safe center}
 .tabs::-webkit-scrollbar{display:none}
@@ -196,34 +189,19 @@ main{max-width:1200px;margin:0 auto;padding:26px 20px 60px}
 /* ---------- Overall list ---------- */
 .board{display:flex;flex-direction:column;gap:9px}
 .row{
-  display:grid;grid-template-columns:54px 46px 1fr auto;align-items:center;gap:14px;
+  display:grid;grid-template-columns:54px 46px 1fr auto minmax(0,auto);align-items:center;gap:14px;
   background:linear-gradient(180deg,var(--panel),var(--bg-2));
-  border:1px solid var(--line-soft);border-radius:13px;padding:12px 16px;cursor:pointer;transition:.16s;animation:rise .5s both;
+  border:1px solid var(--line-soft);border-radius:13px;padding:14px 16px;cursor:pointer;transition:.16s;animation:rise .5s both;
 }
 @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 .row:hover{border-color:var(--line);transform:translateX(3px);background:linear-gradient(180deg,var(--panel-2),var(--bg-2))}
 .rank{font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:20px;text-align:center;color:var(--text-faint)}
 .row.top1 .rank,.row.top2 .rank,.row.top3 .rank{font-size:22px}
-.row.top1{
-  border-color:rgba(245,183,60,.45);
-  box-shadow:0 0 0 1px rgba(245,183,60,.12), 0 6px 26px rgba(245,183,60,.08);
-  background: linear-gradient(90deg, color-mix(in srgb, var(--t1) 50%, transparent), transparent), linear-gradient(180deg, var(--panel), var(--bg-2));
-}
-.row.top1:hover{ background: linear-gradient(90deg, color-mix(in srgb, var(--t1) 18%, transparent), transparent), linear-gradient(180deg, var(--panel-2), var(--bg-2)); }
+.row.top1{border-color:rgba(245,183,60,.45);box-shadow:0 0 0 1px rgba(245,183,60,.12), 0 6px 26px rgba(245,183,60,.08)}
 .row.top1 .rank{color:var(--t1)}
-
-.row.top2{
-  border-color:rgba(195,206,221,.4);
-  background: linear-gradient(90deg, color-mix(in srgb, var(--t2) 25%, transparent), transparent), linear-gradient(180deg, var(--panel), var(--bg-2));
-}
-.row.top2:hover{ background: linear-gradient(90deg, color-mix(in srgb, var(--t2) 15%, transparent), transparent), linear-gradient(180deg, var(--panel-2), var(--bg-2)); }
+.row.top2{border-color:rgba(195,206,221,.4)}
 .row.top2 .rank{color:var(--t2)}
-
-.row.top3{
-  border-color:rgba(203,126,71,.45);
-  background: linear-gradient(90deg, color-mix(in srgb, var(--t3) 10%, transparent), transparent), linear-gradient(180deg, var(--panel), var(--bg-2));
-}
-.row.top3:hover{ background: linear-gradient(90deg, color-mix(in srgb, var(--t3) 15%, transparent), transparent), linear-gradient(180deg, var(--panel-2), var(--bg-2)); }
+.row.top3{border-color:rgba(203,126,71,.45)}
 .row.top3 .rank{color:var(--t3)}
 .row.premium{border-color:rgba(123,196,255,.5);box-shadow:0 0 0 1px rgba(123,196,255,.14), 0 6px 26px rgba(123,196,255,.09)}
 .rank small{display:block;font-size:9px;font-weight:600;letter-spacing:1px;color:var(--text-faint)}
@@ -239,31 +217,46 @@ main{max-width:1200px;margin:0 auto;padding:26px 20px 60px}
 .ptitle .acc-name{font-weight:500}
 .ptitle .pts{color:var(--text-faint);font-size:12.5px}
 
-.pright{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+.pright{display:flex;flex-direction:column;align-items:flex-end;gap:6px;min-width:0}
 .points{font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:16px;line-height:1}
 .points small{font-size:10px;color:var(--text-faint);font-weight:500}
 
-/* stacked tier tiles: gamemode orb on top, tier label below (mctiers style) */
-.gm-strip{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end;max-width:480px}
-.gm-tile{display:flex;flex-direction:column;align-items:center;gap:4px;width:40px}
+/* badges column (sits between the player name and the tiers) */
+.badges{display:flex;flex-direction:column;gap:5px;align-items:flex-start;justify-content:center}
+.badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;line-height:1;padding:4px 9px;border-radius:7px;white-space:nowrap;border:1px solid var(--line);background:var(--bg-2);color:var(--text-dim)}
+.badge .acc-ic{width:14px;height:14px;flex:0 0 auto}
+.badge svg{width:13px;height:13px;flex:0 0 auto}
+.badge.title{color:var(--bc);border-color:color-mix(in srgb,var(--bc) 45%,transparent);background:color-mix(in srgb,var(--bc) 13%,var(--bg-2))}
+.badge.premium{color:var(--accent);border-color:color-mix(in srgb,var(--accent) 45%,transparent);background:rgba(123,196,255,.1)}
+.badge.retired{color:var(--text-faint)}
+
+/* stacked tier tiles: gamemode orb on top, coloured tier rectangle below (mctiers style) */
+.gm-strip{display:flex;gap:7px;flex-wrap:nowrap;justify-content:flex-start;max-width:100%;overflow-x:auto;scrollbar-width:none}
+.gm-strip::-webkit-scrollbar{display:none}
+.gm-tile{display:flex;flex-direction:column;align-items:center;gap:5px;width:46px;flex:0 0 auto}
 .gm-orb{
-  width:36px;height:36px;border-radius:50%;display:grid;place-items:center;
+  width:42px;height:42px;border-radius:50%;display:grid;place-items:center;
   background:radial-gradient(circle at 50% 32%, #1d2c44, #0d1524);
   border:1px solid var(--line);box-shadow:inset 0 1px 0 rgba(255,255,255,.04);
 }
-.gm-orb .ic{display:grid;place-items:center;font-size:18px;line-height:0}
-.gm-orb .ic img{width:30px!important;height:30px!important;object-fit:contain!important;transform:none!important;display:block}
-.gm-t{font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:10.5px;letter-spacing:.3px;line-height:1}
-.gm-orb.t1{border-color:color-mix(in srgb,var(--t1) 60%,transparent)} .gm-t.t1{color:var(--t1)}
-.gm-orb.t2{border-color:color-mix(in srgb,var(--t2) 55%,transparent)} .gm-t.t2{color:var(--t2)}
-.gm-orb.t3{border-color:color-mix(in srgb,var(--t3) 60%,transparent)} .gm-t.t3{color:var(--t3)}
-.gm-orb.t4{border-color:color-mix(in srgb,var(--t4) 60%,transparent)} .gm-t.t4{color:var(--t4)}
-.gm-orb.t5{border-color:color-mix(in srgb,var(--t5) 55%,transparent)} .gm-t.t5{color:var(--t5)}
+.gm-orb .ic{display:grid;place-items:center;font-size:20px;line-height:0}
+.gm-orb .ic img{width:34px!important;height:34px!important;object-fit:contain!important;transform:none!important;display:block}
+.gm-rect{font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:11.5px;letter-spacing:.3px;line-height:1;color:#05080d;width:100%;text-align:center;padding:3px 0;border-radius:5px;background:var(--line)}
+.gm-orb.t1{border-color:color-mix(in srgb,var(--t1) 60%,transparent)} .gm-rect.t1{background:var(--t1)}
+.gm-orb.t2{border-color:color-mix(in srgb,var(--t2) 55%,transparent)} .gm-rect.t2{background:var(--t2)}
+.gm-orb.t3{border-color:color-mix(in srgb,var(--t3) 60%,transparent)} .gm-rect.t3{background:var(--t3)}
+.gm-orb.t4{border-color:color-mix(in srgb,var(--t4) 60%,transparent)} .gm-rect.t4{background:var(--t4)}
+.gm-orb.t5{border-color:color-mix(in srgb,var(--t5) 55%,transparent)} .gm-rect.t5{background:var(--t5)}
+
+/* untested gamemode — dashed placeholder of what could be there */
+.gm-orb.empty{border:1px dashed var(--line)!important;background:transparent!important;box-shadow:none}
+.gm-orb.empty .ic img{width:30px!important;height:30px!important;opacity:.16;filter:grayscale(1)}
+.gm-rect.empty{background:transparent;border:1px dashed var(--line);color:var(--text-faint);font-weight:600}
 
 /* retired / peak tiers — grayed out (no coloured ring) */
 .gm-orb.retired{border-color:#39434f!important;background:radial-gradient(circle at 50% 32%,#232a33,#0c0f14)!important}
 .gm-orb.retired .ic img{filter:grayscale(.92) brightness(.74)}
-.gm-t.retired{color:var(--text-faint)!important}
+.gm-rect.retired{background:#2a323c!important;color:var(--text-faint)!important}
 .entry-retired{opacity:.6}
 .entry-retired .avatar img{filter:grayscale(.85)}
 .mt-tag{font-size:9px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--text-faint);border:1px solid var(--line);border-radius:5px;padding:2px 5px;flex-shrink:0}
@@ -347,6 +340,7 @@ footer b{color:var(--text-dim)}
   main{padding:20px 14px 60px}
   .view-title h2{font-size:22px}
   .row{grid-template-columns:40px 40px 1fr;gap:11px;padding:11px 13px}
+  .badges{grid-column:1 / -1;flex-direction:row;flex-wrap:wrap;gap:6px;justify-content:flex-start;align-items:center;margin-top:2px}
   .pright{grid-column:1 / -1;flex-direction:row;justify-content:flex-start;align-items:center;border-top:1px solid var(--line-soft);padding-top:10px;margin-top:2px}
   .gm-strip{max-width:none;flex:1;justify-content:flex-start;overflow-x:auto;flex-wrap:nowrap;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding-bottom:2px}
   .gm-strip::-webkit-scrollbar{display:none}
@@ -448,12 +442,27 @@ const tierState = info => info.retired ? "Retired Tier" : (info.peak ? "Peak Tie
 
 function tierBadge(t){ return `<span class="tb t${tierDigit(t)} ${tierKind(t)}">${t}</span>`; }
 
-/* one player tier as a stacked tile: gamemode orb on top, tier label below */
+/* one player tier as a stacked tile: gamemode orb on top, coloured tier rectangle below */
 function gmTile(g, val){
   const info=tierInfo(val), d=info.tier.slice(-1);
   const rc=(info.retired||info.peak)?" retired":"";
   const sub=`${info.tier} · ${tierPoints(info.tier)} points`;
-  return `<span class="gm-tile" data-tip-title="${tierState(info)}" data-tip-sub="${sub}"><span class="gm-orb t${d}${rc}"><span class="ic">${g.icon}</span></span><span class="gm-t t${d}${rc}">${info.tier}</span></span>`;
+  return `<span class="gm-tile" data-tip-title="${tierState(info)}" data-tip-sub="${sub}"><span class="gm-orb t${d}${rc}"><span class="ic">${g.icon}</span></span><span class="gm-rect t${d}${rc}">${info.tier}</span></span>`;
+}
+
+/* placeholder tile for a gamemode the player hasn't been tested in */
+function gmPlaceholder(g){
+  return `<span class="gm-tile" data-tip-title="Not tested" data-tip-sub="${g.name}"><span class="gm-orb empty"><span class="ic">${g.icon}</span></span><span class="gm-rect empty">–</span></span>`;
+}
+
+/* badge stack shown between the player's name and their tiers */
+const STAR_SVG=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`;
+const RETIRE_SVG=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="8" y1="12" x2="16" y2="12"/></svg>`;
+function playerBadges(p,t){
+  let b=`<span class="badge title" style="--bc:${t.color}">${accoladeIcon(t)}<span>${t.name}</span></span>`;
+  if(p.premium) b+=`<span class="badge premium">${STAR_SVG}Premium</span>`;
+  if(isFullyRetired(p)) b+=`<span class="badge retired">${RETIRE_SVG}Retired</span>`;
+  return `<div class="badges">${b}</div>`;
 }
 
 /* accolade/title emblem. If a title has an "icon" in data.json it's used;
@@ -497,27 +506,18 @@ function buildTabs(){
     indicator.style.width = activeBtn.offsetWidth + "px";
   }
 
-  tabs.querySelectorAll(".tab").forEach((b, idx) => {
+  tabs.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{
     const updateUI = () => {
       activeTab = b.dataset.tab;
       buildTabs();
       render();
     };
-
-    b.onclick = () => {
-      if (activeTab === b.dataset.tab) return;
-      const tabArray = Array.from(tabs.querySelectorAll(".tab"));
-      const oldIdx = tabArray.findIndex(t => t.dataset.tab === activeTab);
-      const dir = idx > oldIdx ? "slide-left" : "slide-right";
-      document.documentElement.classList.add(dir);
-
-      if (document.startViewTransition) {
-        const transition = document.startViewTransition(updateUI);
-        transition.finished.finally(() => document.documentElement.classList.remove(dir));
-      } else {
-        updateUI();
-      }
-    };
+    // Use View Transitions API if supported, otherwise fallback to standard update
+    if (document.startViewTransition) {
+      document.startViewTransition(updateUI);
+    } else {
+      updateUI();
+    }
   });
 }
 
@@ -547,7 +547,7 @@ function renderOverall(){
   html+=`<div class="board">`;
   ranked.forEach((x,idx)=>{
     const p=x.p,t=titleFor(x.total),topCls=x.rank<=3?` top${x.rank}`:(p.premium?" premium":"");
-    const chips=GAMEMODES.filter(g=>p.tiers[g.id]).map(g=>gmTile(g,p.tiers[g.id])).join("");
+    const chips=GAMEMODES.map(g=>p.tiers[g.id]?gmTile(g,p.tiers[g.id]):gmPlaceholder(g)).join("");
     html+=`<div class="row${topCls}" style="animation-delay:${idx*18}ms" data-player="${encodeURIComponent(p.name)}">
       <div class="rank">${x.rank}${x.rank<=3?'<small>RANK</small>':''}</div>
       ${avatar(p.name)}
@@ -555,6 +555,7 @@ function renderOverall(){
         <div class="pname">${p.name} ${p.region?`<span class="region">${p.region}</span>`:""}</div>
         <div class="points" style="color:${t.color}">${x.total}<small> PTS</small></div>
       </div>
+      ${playerBadges(p,t)}
       <div class="pright">
         <div class="gm-strip">${chips}</div>
       </div>
