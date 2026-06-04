@@ -152,7 +152,7 @@
           "retired": true
         },
         "dsmp": "LT1",
-        "nsmp": "HT2",
+        "nsmp": "LT1",
         "dpot": "HT2",
         "npot": "HT2",
         "hsmp": "LT1"
