@@ -104,6 +104,7 @@
     {
       "name": "cricketrlz0000",
       "region": "",
+      "premium": true,
       "tiers": {
         "sword": "LT1",
         "axe": "LT1",
@@ -120,6 +121,7 @@
     {
       "name": "Brojules",
       "region": "",
+      "premium": true,
       "tiers": {
         "sword": "LT1",
         "axe": "HT3",
@@ -136,14 +138,21 @@
     {
       "name": "xqste",
       "region": "",
+      "premium": true,
       "tiers": {
         "sword": "LT1",
         "axe": "LT1",
         "uhc": "LT1",
-        "mace": "HT1",
-        "crystal": "LT1",
+        "mace": {
+          "tier": "HT1",
+          "retired": true
+        },
+        "crystal": {
+          "tier": "LT1",
+          "retired": true
+        },
         "dsmp": "LT1",
-        "nsmp": "HT2",
+        "nsmp": "LT1",
         "dpot": "HT2",
         "npot": "HT2",
         "hsmp": "LT1"
@@ -178,13 +187,14 @@
     {
       "name": "__synn",
       "region": "",
+      "premium": true,
       "tiers": {
         "sword": "LT1",
         "axe": "HT3",
         "uhc": "HT2",
         "mace": "LT2",
         "crystal": "LT1",
-        "dsmp": "LT2",
+        "dsmp": "HT2",
         "nsmp": "HT3",
         "dpot": "HT3",
         "npot": "LT2",
@@ -205,6 +215,7 @@
     {
       "name": "Piqt",
       "region": "",
+      "premium": true,
       "tiers": {
         "sword": "LT2",
         "axe": "LT1",
@@ -221,6 +232,7 @@
     {
       "name": "_knife__",
       "region": "",
+      "premium": true,
       "tiers": {
         "sword": "LT2",
         "axe": "LT4",
@@ -237,10 +249,11 @@
     {
       "name": "__bigd",
       "region": "",
+      "premium": true,
       "tiers": {
-        "sword": "LT2",
+        "sword": "HT2",
         "axe": "HT3",
-        "uhc": "HT4",
+        "uhc": "HT3",
         "mace": "LT4",
         "crystal": "HT5",
         "dsmp": "LT3",
@@ -253,13 +266,14 @@
     {
       "name": "Velox2102",
       "region": "",
+      "premium": true,
       "tiers": {
         "sword": "LT2",
         "axe": "HT4",
         "uhc": "HT3",
         "mace": "HT2",
         "crystal": "HT5",
-        "dsmp": "HT3",
+        "dsmp": "LT2",
         "nsmp": "HT3",
         "dpot": "HT5",
         "npot": "LT3",
@@ -297,10 +311,11 @@
     {
       "name": "D2ck000",
       "region": "",
+      "premium": true,
       "tiers": {
         "sword": "LT3",
         "axe": "HT4",
-        "uhc": "LT3",
+        "uhc": "HT4",
         "mace": "HT3",
         "crystal": "LT2",
         "dsmp": "HT4",
@@ -313,6 +328,7 @@
     {
       "name": "CoolIcee",
       "region": "",
+      "premium": true,
       "tiers": {
         "sword": "LT3",
         "axe": "HT3",
@@ -320,12 +336,16 @@
         "dsmp": "LT3",
         "nsmp": "LT3",
         "hsmp": "LT2",
-        "uhc": "LT2"
+        "uhc": {
+          "tier": "LT2",
+          "retired": true
+        }
       }
     },
     {
       "name": "Gameories",
       "region": "",
+      "premium": true,
       "tiers": {
         "sword": "HT4",
         "axe": "LT3",
@@ -340,8 +360,14 @@
       "name": "g0d0rs4tan",
       "region": "",
       "tiers": {
-        "sword": "HT4",
-        "axe": "LT5"
+        "sword": {
+          "tier": "HT4",
+          "retired": true
+        },
+        "axe": {
+          "tier": "LT5",
+          "retired": true
+        }
       }
     },
     {
@@ -364,8 +390,9 @@
     {
       "name": "BigA_1",
       "region": "",
+      "premium": true,
       "tiers": {
-        "sword": "HT4",
+        "sword": "LT3",
         "axe": "LT3",
         "uhc": "HT4",
         "mace": "LT4"
@@ -397,6 +424,7 @@
     {
       "name": "bigmaclover2121",
       "region": "",
+      "premium": true,
       "tiers": {
         "sword": "LT4",
         "axe": "HT4",
@@ -409,6 +437,7 @@
     {
       "name": "ZzAsleepzZ",
       "region": "",
+      "premium": true,
       "tiers": {
         "sword": "LT4",
         "axe": "HT4",
@@ -427,6 +456,7 @@
     {
       "name": "epicddss",
       "region": "",
+      "premium": true,
       "tiers": {
         "axe": "LT2"
       }
@@ -434,21 +464,50 @@
     {
       "name": "StrongMan09",
       "region": "",
+      "premium": true,
       "tiers": {
-        "axe": "LT4",
-        "uhc": "LT4",
-        "mace": "LT5",
-        "dsmp": "HT5",
-        "nsmp": "HT5"
+        "axe": {
+          "tier": "LT4",
+          "retired": true
+        },
+        "uhc": {
+          "tier": "LT4",
+          "retired": true
+        },
+        "mace": {
+          "tier": "LT5",
+          "retired": true
+        },
+        "dsmp": {
+          "tier": "HT5",
+          "retired": true
+        },
+        "nsmp": {
+          "tier": "HT5",
+          "retired": true
+        },
+        "sword": {
+          "tier": "HT5",
+          "retired": true
+        }
       }
     },
     {
       "name": "Bronzon155",
       "region": "",
       "tiers": {
-        "axe": "LT5",
-        "dsmp": "LT4",
-        "sword": "HT5"
+        "axe": {
+          "tier": "LT5",
+          "retired": true
+        },
+        "dsmp": {
+          "tier": "LT4",
+          "retired": true
+        },
+        "sword": {
+          "tier": "HT5",
+          "retired": true
+        }
       }
     },
     {
@@ -463,6 +522,7 @@
     {
       "name": "qonobo",
       "region": "",
+      "premium": true,
       "tiers": {
         "mace": "HT4",
         "dsmp": "LT4",
@@ -503,6 +563,7 @@
     {
       "name": "MrP3nguin_",
       "region": "",
+      "premium": true,
       "tiers": {
         "dsmp": {
           "tier": "HT1",
@@ -555,6 +616,7 @@
     {
       "name": "Henrry999",
       "region": "",
+      "premium": true,
       "tiers": {
         "dsmp": {
           "tier": "LT1",
