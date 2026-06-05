@@ -162,7 +162,6 @@
       "name": "icedcoffee",
       "region": "",
       "tiers": {
-        "mace": "LT2",
         "nsmp": "HT2",
         "dpot": "LT1",
         "npot": "LT1"
