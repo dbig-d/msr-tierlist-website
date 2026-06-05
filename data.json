@@ -159,13 +159,6 @@
       }
     },
     {
-      "name": "icedcoffee",
-      "region": "",
-      "tiers": {
-        "npot": "LT1"
-      }
-    },
-    {
       "name": "__synn",
       "region": "",
       "premium": true,
