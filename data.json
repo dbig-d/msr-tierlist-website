@@ -162,7 +162,6 @@
       "name": "icedcoffee",
       "region": "",
       "tiers": {
-        "uhc": "LT1",
         "mace": "LT2",
         "crystal": "LT1",
         "nsmp": "HT2",
