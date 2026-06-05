@@ -163,7 +163,6 @@
       "region": "",
       "tiers": {
         "mace": "LT2",
-        "crystal": "LT1",
         "nsmp": "HT2",
         "dpot": "LT1",
         "npot": "LT1"
