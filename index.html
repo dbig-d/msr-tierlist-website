@@ -153,9 +153,16 @@ select:focus{border-color:var(--accent)}
 
  /* View Transitions: Smoothly transition the content area when switching tabs */
  #content { view-transition-name: tab-content; }
- ::view-transition-old(tab-content) { animation: 150ms ease-in both fade-out; }
- ::view-transition-new(tab-content) { animation: 300ms ease-out both rise; }
- @keyframes fade-out { to { opacity: 0; } }
+
+ .slide-left::view-transition-old(tab-content) { animation: 200ms ease-in both slide-to-left; }
+ .slide-left::view-transition-new(tab-content) { animation: 350ms cubic-bezier(0, 0, 0.2, 1) both slide-from-right; }
+ .slide-right::view-transition-old(tab-content) { animation: 200ms ease-in both slide-to-right; }
+ .slide-right::view-transition-new(tab-content) { animation: 350ms cubic-bezier(0, 0, 0.2, 1) both slide-from-left; }
+
+ @keyframes slide-to-left { to { transform: translateX(-40px); opacity: 0; } }
+ @keyframes slide-from-right { from { transform: translateX(40px); opacity: 0; } }
+ @keyframes slide-to-right { to { transform: translateX(40px); opacity: 0; } }
+ @keyframes slide-from-left { from { transform: translateX(-40px); opacity: 0; } }
 
 .tabs{position:relative;max-width:1200px;margin:0 auto;padding:0 12px;display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;justify-content:safe center}
 .tabs::-webkit-scrollbar{display:none}
@@ -545,18 +552,27 @@ function buildTabs(){
     indicator.style.width = activeBtn.offsetWidth + "px";
   }
 
-  tabs.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{
+  tabs.querySelectorAll(".tab").forEach((b, idx) => {
     const updateUI = () => {
       activeTab = b.dataset.tab;
       buildTabs();
       render();
     };
-    // Use View Transitions API if supported, otherwise fallback to standard update
-    if (document.startViewTransition) {
-      document.startViewTransition(updateUI);
-    } else {
-      updateUI();
-    }
+
+    b.onclick = () => {
+      if (activeTab === b.dataset.tab) return;
+      const tabArray = Array.from(tabs.querySelectorAll(".tab"));
+      const oldIdx = tabArray.findIndex(t => t.dataset.tab === activeTab);
+      const dir = idx > oldIdx ? "slide-left" : "slide-right";
+      document.documentElement.classList.add(dir);
+
+      if (document.startViewTransition) {
+        const transition = document.startViewTransition(updateUI);
+        transition.finished.finally(() => document.documentElement.classList.remove(dir));
+      } else {
+        updateUI();
+      }
+    };
   });
 }
 
