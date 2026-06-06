@@ -485,7 +485,7 @@ const tierInfo  = v => (typeof v==="string") ? {tier:v,retired:false,peak:false}
 const tierPoints = v => POINTS[tierCode(v)] || 0;
 const tierDigit  = t => tierCode(t).slice(-1);
 const tierKind   = t => tierCode(t).slice(0,2).toLowerCase();
-const playerTotal = p => Object.values(p.tiers).reduce((s,v)=>s+tierPoints(v),0);
+const playerTotal = p => Object.entries(p.tiers).reduce((s,[gid,v]) => (GM && GM[gid] && GM[gid].subtier) ? s : s + tierPoints(v), 0);
 const titleFor = pts => TITLES.find(t=>pts>=t.min);
 const tierState = info => info.retired ? "Retired Tier" : (info.peak ? "Peak Tier" : "Tier");
 
@@ -532,7 +532,10 @@ function avatar(name, cls=""){
 }
 
 let activeTab="overall", query="", region="", hideRetired=false, premiumOnly=false, showSubTiers=false;
-const isFullyRetired = p => {const v=Object.values(p.tiers); return v.length>0 && v.every(x=>tierInfo(x).retired);};
+const isFullyRetired = p => {
+  const v = Object.entries(p.tiers).filter(([gid]) => !(GM && GM[gid] && GM[gid].subtier)).map(it => it[1]);
+  return v.length > 0 && v.every(x => tierInfo(x).retired);
+};
 
 /* region filter (auto-hides if no regions present) */
 function buildRegionFilter(){
@@ -594,8 +597,8 @@ function renderOverall(){
   const ranked=PLAYERS.map(p=>({p,total:playerTotal(p)}))
     .sort((a,b)=>b.total-a.total||a.p.name.localeCompare(b.p.name))
     .map((x,i)=>({...x,rank:i+1})).filter(x=>matchPlayer(x.p) && !(hideRetired && isFullyRetired(x.p)));
-  const tp=PLAYERS.length, modes=GAMEMODES.length;
-  const tested=PLAYERS.reduce((s,p)=>s+Object.keys(p.tiers).length,0);
+  const tp=PLAYERS.length, modes=GAMEMODES.filter(g => !g.subtier).length;
+  const tested=PLAYERS.reduce((s,p)=>s+Object.keys(p.tiers).filter(gid => !(GM[gid] && GM[gid].subtier)).length,0);
 
   let html=`<div class="view-title"><h2>Overall Rankings</h2><span class="sub">Aggregate skill across all gamemodes</span></div>
   <div class="stats">
@@ -615,7 +618,7 @@ function renderOverall(){
   </div>`;
   ranked.forEach((x,idx)=>{
     const p=x.p,t=titleFor(x.total),topCls=x.rank<=3?` top${x.rank}`:(p.premium?" premium":"");
-    const chips=GAMEMODES.map(g=>p.tiers[g.id]?gmTile(g,p.tiers[g.id]):gmPlaceholder(g)).join("");
+    const chips=GAMEMODES.filter(g => !g.subtier).map(g=>p.tiers[g.id]?gmTile(g,p.tiers[g.id]):gmPlaceholder(g)).join("");
     html+=`<div class="row${topCls}" style="animation-delay:${idx*18}ms" data-player="${encodeURIComponent(p.name)}">
       <div class="rank">${x.rank}${x.rank<=3?'<small>RANK</small>':''}</div>
       ${avatar(p.name)}
