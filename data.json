@@ -176,7 +176,7 @@
       "premium": true,
       "tester": true,
       "subtester": "cart",
-      "house": "red",
+      "house": "blue",
       "tiers": {
         "sword": "LT1",
         "axe": "LT1",
