@@ -383,6 +383,9 @@
           "tier": "LT2",
           "retired": true
         }
+      },
+      "subtiers": {
+        "pearl": "HT5"
       }
     },
     {
