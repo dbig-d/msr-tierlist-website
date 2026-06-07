@@ -153,16 +153,9 @@ select:focus{border-color:var(--accent)}
 
  /* View Transitions: Smoothly transition the content area when switching tabs */
  #content { view-transition-name: tab-content; }
-
- .slide-left::view-transition-old(tab-content) { animation: 200ms ease-in both slide-to-left; }
- .slide-left::view-transition-new(tab-content) { animation: 350ms cubic-bezier(0, 0, 0.2, 1) both slide-from-right; }
- .slide-right::view-transition-old(tab-content) { animation: 200ms ease-in both slide-to-right; }
- .slide-right::view-transition-new(tab-content) { animation: 350ms cubic-bezier(0, 0, 0.2, 1) both slide-from-left; }
-
- @keyframes slide-to-left { to { transform: translateX(-40px); opacity: 0; } }
- @keyframes slide-from-right { from { transform: translateX(40px); opacity: 0; } }
- @keyframes slide-to-right { to { transform: translateX(40px); opacity: 0; } }
- @keyframes slide-from-left { from { transform: translateX(-40px); opacity: 0; } }
+ ::view-transition-old(tab-content) { animation: 150ms ease-in both fade-out; }
+ ::view-transition-new(tab-content) { animation: 300ms ease-out both rise; }
+ @keyframes fade-out { to { opacity: 0; } }
 
 .tabs{position:relative;max-width:1200px;margin:0 auto;padding:0 12px;display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;justify-content:safe center}
 .tabs::-webkit-scrollbar{display:none}
@@ -186,7 +179,7 @@ select:focus{border-color:var(--accent)}
 .tab .ic img{opacity:1; filter:none;}
 .tab .lb{line-height:1}
 .tab:hover{color:var(--text)}
-.tab:hover .ic{opacity:1}
+.tab:hover .ic{opacity:1;transform:scale(1.15)}
 .tab.active{color:var(--text);background:linear-gradient(180deg,var(--panel),rgba(16,26,43,0))}
 .tab.active .ic{opacity:1}
 
@@ -214,14 +207,11 @@ main{max-width:1200px;margin:0 auto;padding:26px 20px 60px}
 .row:hover{border-color:var(--line);transform:translateX(3px);background:linear-gradient(180deg,var(--panel-2),var(--bg-2))}
 .rank{font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:20px;text-align:center;color:var(--text-faint)}
 .row.top1 .rank,.row.top2 .rank,.row.top3 .rank{font-size:22px}
-.row.top1{border-color:rgba(245,183,60,.45);box-shadow:0 0 0 1px rgba(245,183,60,.12), 0 6px 26px rgba(245,183,60,.08);background:linear-gradient(90deg,color-mix(in srgb,var(--t1) 50%,var(--panel)),var(--panel))}
-.row.top1:hover{background:linear-gradient(90deg,color-mix(in srgb,var(--t1) 22%,var(--panel-2)),var(--panel-2))}
+.row.top1{border-color:rgba(245,183,60,.45);box-shadow:0 0 0 1px rgba(245,183,60,.12), 0 6px 26px rgba(245,183,60,.08)}
 .row.top1 .rank{color:var(--t1)}
-.row.top2{border-color:rgba(195,206,221,.4);background:linear-gradient(90deg,color-mix(in srgb,var(--t2) 12%,var(--panel)),var(--panel))}
-.row.top2:hover{background:linear-gradient(90deg,color-mix(in srgb,var(--t2) 25%,var(--panel-2)),var(--panel-2))}
+.row.top2{border-color:rgba(195,206,221,.4)}
 .row.top2 .rank{color:var(--t2)}
-.row.top3{border-color:rgba(203,126,71,.45);background:linear-gradient(90deg,color-mix(in srgb,var(--t3) 10%,var(--panel)),var(--panel))}
-.row.top3:hover{background:linear-gradient(90deg,color-mix(in srgb,var(--t3) 10%,var(--panel-2)),var(--panel-2))}
+.row.top3{border-color:rgba(203,126,71,.45)}
 .row.top3 .rank{color:var(--t3)}
 .row.premium{border-color:rgba(123,196,255,.5);box-shadow:0 0 0 1px rgba(123,196,255,.14), 0 6px 26px rgba(123,196,255,.09)}
 .rank small{display:block;font-size:9px;font-weight:600;letter-spacing:1px;color:var(--text-faint)}
@@ -332,7 +322,7 @@ main{max-width:1200px;margin:0 auto;padding:26px 20px 60px}
 .modal-bg{position:fixed;inset:0;z-index:100;background:rgba(4,7,12,.74);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:20px}
 .modal-bg.open{display:flex;animation:fade .2s}
 @keyframes fade{from{opacity:0}to{opacity:1}}
-.modal{background:linear-gradient(180deg,var(--panel),var(--bg-2));border:1px solid var(--line);border-radius:18px;max-width:540px;width:100%;max-height:88vh;overflow-y:auto;animation:pop .22s;box-shadow:0 30px 80px rgba(0,0,0,.6)}
+.modal{background:linear-gradient(180deg,var(--panel),var(--bg-2));border:1px solid var(--line);border-radius:18px;max-width:620px;width:100%;max-height:88vh;overflow-y:auto;animation:pop .22s;box-shadow:0 30px 80px rgba(0,0,0,.6)}
 @keyframes pop{from{opacity:0;transform:scale(.95) translateY(10px)}to{opacity:1;transform:none}}
 .modal-head{position:relative;padding:26px 24px 20px;display:flex;gap:16px;align-items:center;border-bottom:1px solid var(--line-soft);background:radial-gradient(420px 130px at 18% 0%,rgba(123,196,255,.1),transparent)}
 .modal-head .avatar{width:66px;height:66px;border-radius:12px}
@@ -354,6 +344,33 @@ main{max-width:1200px;margin:0 auto;padding:26px 20px 60px}
 .mtier .mt-gm .ic img{width:18px;height:18px;object-fit:contain;vertical-align:middle}
 .mtier .mt-pts{font-size:10px;color:var(--text-faint);margin-left:auto;margin-right:8px;flex-shrink:0;white-space:nowrap}
 .mtier .tb{flex-shrink:0}
+
+/* ---------- Player profile (modal) ---------- */
+.profile-head{display:flex;gap:24px;align-items:center;padding:26px 26px 20px;border-bottom:1px solid var(--line-soft);background:radial-gradient(480px 170px at 22% 0%,rgba(123,196,255,.12),transparent);position:relative}
+.profile-skin{flex:0 0 auto;width:104px;min-height:200px;display:flex;align-items:flex-end;justify-content:center}
+.profile-skin img{height:200px;width:auto;image-rendering:pixelated;filter:drop-shadow(0 12px 20px rgba(0,0,0,.55));animation:skinSway 3.6s ease-in-out infinite}
+.skin-fallback{display:none;width:96px;height:170px;place-items:center;font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:46px;color:var(--text-dim);background:linear-gradient(160deg,#1d2c40,#13202f);border:1px solid var(--line);border-radius:12px}
+@keyframes skinSway{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+.profile-info{flex:1;min-width:0}
+.profile-name{font-family:'Chakra Petch',sans-serif;font-size:30px;font-weight:700;line-height:1.05;margin-bottom:13px;word-break:break-word}
+.profile-badges{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:15px}
+.profile-badges .badge{cursor:help}
+.profile-stats{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.pstat-rank{font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:13px;background:var(--panel-2);border:1px solid var(--line);border-radius:8px;padding:5px 11px;color:var(--text)}
+.pstat-pts{font-size:12px;letter-spacing:.5px;text-transform:uppercase;color:var(--text-faint);font-weight:600;display:inline-flex;align-items:baseline;gap:6px}
+.pstat-pts b{font-family:'Chakra Petch',sans-serif;font-size:26px;line-height:1}
+.pstat-region{font-size:11px;font-weight:700;letter-spacing:.5px;padding:4px 9px;border-radius:6px;background:var(--panel-2);border:1px solid var(--line);color:var(--text-dim)}
+
+.tier-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(98px,1fr));gap:10px}
+.tcard{display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 8px 12px;background:var(--bg-2);border:1px solid var(--line-soft);border-radius:13px;transition:.15s;cursor:default}
+.tcard:hover{border-color:var(--line);background:var(--panel-2)}
+.tcard-name{font-size:12px;font-weight:600;color:var(--text-dim);text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.tcard .gm-rect{max-width:56px}
+.tcard-pts{font-size:11px;color:var(--text-faint);font-family:'Chakra Petch',sans-serif;font-weight:600}
+.tcard-empty{opacity:.5}
+.tcard-empty .tcard-pts{font-style:italic}
+.tcard .gm-orb .ic img{transition:transform .16s ease}
+.tcard:hover .gm-orb .ic img{transform:scale(1.15)!important}
 
 /* ---------- Stats / footer ---------- */
 .stats{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px}
@@ -385,6 +402,10 @@ footer b{color:var(--text-dim)}
   main{padding:20px 14px 60px}
   .view-title h2{font-size:22px}
   .board-head{display:none}
+  .profile-head{flex-direction:column;text-align:center;gap:14px;padding:22px 18px 18px}
+  .profile-skin{width:auto;min-height:0}
+  .profile-name{font-size:26px}
+  .profile-badges,.profile-stats{justify-content:center}
   .row{grid-template-columns:40px 40px 1fr;gap:11px;padding:11px 13px}
   .badges{grid-column:1 / -1;flex-direction:row;flex-wrap:wrap;gap:6px;justify-content:flex-start;align-items:center;margin-top:2px}
   .pright{grid-column:1 / -1;flex-direction:row;justify-content:flex-start;align-items:center;border-top:1px solid var(--line-soft);padding-top:10px;margin-top:2px}
@@ -446,10 +467,6 @@ footer b{color:var(--text-dim)}
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
         <span>Premium</span>
       </button>
-      <button class="filter-chip" id="toggleSubTiers" title="Switch between Main and Sub Tiers">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-        <span>Sub Tiers</span>
-      </button>
     </div>
   </div>
 </header>
@@ -485,7 +502,7 @@ const tierInfo  = v => (typeof v==="string") ? {tier:v,retired:false,peak:false}
 const tierPoints = v => POINTS[tierCode(v)] || 0;
 const tierDigit  = t => tierCode(t).slice(-1);
 const tierKind   = t => tierCode(t).slice(0,2).toLowerCase();
-const playerTotal = p => Object.entries(p.tiers).reduce((s,[gid,v]) => (GM && GM[gid] && GM[gid].subtier) ? s : s + tierPoints(v), 0);
+const playerTotal = p => Object.values(p.tiers).reduce((s,v)=>s+tierPoints(v),0);
 const titleFor = pts => TITLES.find(t=>pts>=t.min);
 const tierState = info => info.retired ? "Retired Tier" : (info.peak ? "Peak Tier" : "Tier");
 
@@ -531,11 +548,8 @@ function avatar(name, cls=""){
     <span class="avatar-fallback">${init}</span></div>`;
 }
 
-let activeTab="overall", query="", region="", hideRetired=false, premiumOnly=false, showSubTiers=false;
-const isFullyRetired = p => {
-  const v = Object.entries(p.tiers).filter(([gid]) => !(GM && GM[gid] && GM[gid].subtier)).map(it => it[1]);
-  return v.length > 0 && v.every(x => tierInfo(x).retired);
-};
+let activeTab="overall", query="", region="", hideRetired=false, premiumOnly=false;
+const isFullyRetired = p => {const v=Object.values(p.tiers); return v.length>0 && v.every(x=>tierInfo(x).retired);};
 
 /* region filter (auto-hides if no regions present) */
 function buildRegionFilter(){
@@ -547,11 +561,8 @@ function buildRegionFilter(){
 
 function buildTabs(){
   const tabs=document.getElementById("tabs");
-  let html="";
-  if(!showSubTiers) {
-    html=`<button class="tab ${activeTab==="overall"?"active":""}" data-tab="overall"><span class="ic"><img src='Images/Icons/Trophy.png' style='height:1em; vertical-align: middle; transform:scale(3.5) translateY(-2px);'></span><span class="lb">Overall</span></button>`;
-  }
-  GAMEMODES.filter(g => !!g.subtier === showSubTiers).forEach(g=>{ html+=`<button class="tab ${activeTab===g.id?"active":""}" data-tab="${g.id}"><span class="ic">${g.icon}</span><span class="lb">${g.name}</span></button>`; });
+  let html=`<button class="tab ${activeTab==="overall"?"active":""}" data-tab="overall"><span class="ic"><img src='Images/Icons/Trophy.png' style='height:1em; vertical-align: middle; transform:scale(3.5) translateY(-2px);'></span><span class="lb">Overall</span></button>`;
+  GAMEMODES.forEach(g=>{ html+=`<button class="tab ${activeTab===g.id?"active":""}" data-tab="${g.id}"><span class="ic">${g.icon}</span><span class="lb">${g.name}</span></button>`; });
   html += `<div class="tab-indicator"></div>`;
   tabs.innerHTML=html;
 
@@ -562,27 +573,18 @@ function buildTabs(){
     indicator.style.width = activeBtn.offsetWidth + "px";
   }
 
-  tabs.querySelectorAll(".tab").forEach((b, idx) => {
+  tabs.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{
     const updateUI = () => {
       activeTab = b.dataset.tab;
       buildTabs();
       render();
     };
-
-    b.onclick = () => {
-      if (activeTab === b.dataset.tab) return;
-      const tabArray = Array.from(tabs.querySelectorAll(".tab"));
-      const oldIdx = tabArray.findIndex(t => t.dataset.tab === activeTab);
-      const dir = idx > oldIdx ? "slide-left" : "slide-right";
-      document.documentElement.classList.add(dir);
-
-      if (document.startViewTransition) {
-        const transition = document.startViewTransition(updateUI);
-        transition.finished.finally(() => document.documentElement.classList.remove(dir));
-      } else {
-        updateUI();
-      }
-    };
+    // Use View Transitions API if supported, otherwise fallback to standard update
+    if (document.startViewTransition) {
+      document.startViewTransition(updateUI);
+    } else {
+      updateUI();
+    }
   });
 }
 
@@ -597,8 +599,8 @@ function renderOverall(){
   const ranked=PLAYERS.map(p=>({p,total:playerTotal(p)}))
     .sort((a,b)=>b.total-a.total||a.p.name.localeCompare(b.p.name))
     .map((x,i)=>({...x,rank:i+1})).filter(x=>matchPlayer(x.p) && !(hideRetired && isFullyRetired(x.p)));
-  const tp=PLAYERS.length, modes=GAMEMODES.filter(g => !g.subtier).length;
-  const tested=PLAYERS.reduce((s,p)=>s+Object.keys(p.tiers).filter(gid => !(GM[gid] && GM[gid].subtier)).length,0);
+  const tp=PLAYERS.length, modes=GAMEMODES.length;
+  const tested=PLAYERS.reduce((s,p)=>s+Object.keys(p.tiers).length,0);
 
   let html=`<div class="view-title"><h2>Overall Rankings</h2><span class="sub">Aggregate skill across all gamemodes</span></div>
   <div class="stats">
@@ -618,7 +620,7 @@ function renderOverall(){
   </div>`;
   ranked.forEach((x,idx)=>{
     const p=x.p,t=titleFor(x.total),topCls=x.rank<=3?` top${x.rank}`:(p.premium?" premium":"");
-    const chips=GAMEMODES.filter(g => !g.subtier).map(g=>p.tiers[g.id]?gmTile(g,p.tiers[g.id]):gmPlaceholder(g)).join("");
+    const chips=GAMEMODES.map(g=>p.tiers[g.id]?gmTile(g,p.tiers[g.id]):gmPlaceholder(g)).join("");
     html+=`<div class="row${topCls}" style="animation-delay:${idx*18}ms" data-player="${encodeURIComponent(p.name)}">
       <div class="rank">${x.rank}${x.rank<=3?'<small>RANK</small>':''}</div>
       ${avatar(p.name)}
@@ -713,8 +715,8 @@ function openInfo(tab) {
           <span style="padding:2px 8px;background:var(--bg-2);border:1px solid var(--line-soft);border-radius:6px">💥 Creeper</span>
           <span style="padding:2px 8px;background:var(--bg-2);border:1px solid var(--line-soft);border-radius:6px">🔥 Fireball</span>
           <span style="padding:2px 8px;background:var(--bg-2);border:1px solid var(--line-soft);border-radius:6px">❄️ Spleef</span>
-          <span style="padding:2px 8px;background:var(--bg-2);border:1px solid var(--line-soft);border-radius:6px">⚔️ Spear Mace</span>
-          <span style="padding:2px 8px;background:var(--bg-2);border:1px solid var(--line-soft);border-radius:6px">👁️ Pearl Fight</span>
+          <span style="padding:2px 8px;background:var(--bg-2);border:1px solid var(--line-soft);border-radius:6px">🔱 Trident</span>
+          <span style="padding:2px 8px;background:var(--bg-2);border:1px solid var(--line-soft);border-radius:6px">👁️ Pearl</span>
         </div>
         <h4 style="color:var(--text);margin-bottom:4px">Sub Tier Testers</h4>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 12px;font-size:13px">
@@ -723,7 +725,7 @@ function openInfo(tab) {
           <div><b>__synn</b> — Fireball Fight 🔥</div>
           <div><b>D2ck000</b> — Creeper 💣</div>
           <div><b>Jaynaka15</b> — Spleef ❄️</div>
-          <div><b>cricketrlz</b> — Spear Mace ⚔️</div>
+          <div><b>cricketrlz</b> — Trident 🔱</div>
         </div>
       </div>`;
     } else {
@@ -732,10 +734,10 @@ function openInfo(tab) {
         <p style="margin-bottom:10px">Request tests via <b>xqste</b> (xqste_ on discord). Availability depends on tester activity. Follow all instructions to ensure accuracy.</p>
         <h4 style="color:var(--text);margin-bottom:4px">AU Testing Servers</h4>
         <div style="margin-bottom:12px;font-size:13px">
-          <div style="color:#54c66b">• mcpvp.club (Recommended)</div>
-          <div style="color:#54c66b">• oceanias.net</div>
-          <div style="color:#54c66b">• au.catpvp.xyz</div>
-          <div style="color:#f5b73c">• oceprestige.net (Not Recommended)</div>
+          <div style="color:#f5b73c">• mcpvp.club (Not Recommended)</div>
+          <div style="color:#f5b73c">• oceanias.net (KB not synced to ping)</div>
+          <div style="color:#54c66b">• au.catpvp.xyz (Recommended)</div>
+          <div style="color:#54c66b">• oceprestige.net (Recommended)</div>
         </div>
         <h4 style="color:var(--text);margin-bottom:4px">Test Types</h4>
         <p style="margin-bottom:6px"><b>LT Tests:</b> Awards up to HT4. For unranked or retesting.</p>
@@ -796,7 +798,7 @@ function openInfo(tab) {
       </div>`;
     } else if(isHouMem) {
       bodyHtml = subTabsHtml + `<div style="line-height:1.6;color:var(--text-dim);font-size:14px">
-        <h4 style="color:var(--text);margin-bottom:4px">MSR Houses – Members</h4>
+        <h4 style="color:var(--text);margin-bottom:4px">MSR Houses – Members 🏠</h4>
         <p style="margin-bottom:16px">Current balanced House assignments for ranked players.</p>
         
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px">
@@ -827,7 +829,7 @@ function openInfo(tab) {
       </div>`;
     } else if(isHouLdr) {
       bodyHtml = subTabsHtml + `<div style="line-height:1.6;color:var(--text-dim);font-size:14px">
-        <h4 style="color:var(--text);margin-bottom:4px">House Leaderboard</h4>
+        <h4 style="color:var(--text);margin-bottom:4px">House Leaderboard 🏆</h4>
         <p style="margin-bottom:12px">The House Leaderboard tracks the total points earned by each House across all official MSR tournaments and events.</p>
         <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:20px">
           <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:var(--bg-2);border-radius:10px;border:1px solid var(--line-soft)">
@@ -854,7 +856,7 @@ function openInfo(tab) {
         {n:'MrP3nguin_', h:'🟨 House 4', p:0}, {n:'Velox2102', h:'🟨 House 4', p:0}, {n:'__bigd', h:'🟨 House 4', p:0}, {n:'D2ck000', h:'🟨 House 4', p:0}, {n:'Gameories', h:'🟨 House 4', p:0}
       ];
       bodyHtml = subTabsHtml + `<div style="line-height:1.6;color:var(--text-dim);font-size:14px">
-        <h4 style="color:var(--text);margin-bottom:4px">House Contributions – Lifetime Points</h4>
+        <h4 style="color:var(--text);margin-bottom:4px">House Contributions – Lifetime Points 📊</h4>
         <p style="margin-bottom:12px">This page tracks the total House points earned by each player across all MSR tournaments and events.</p>
         <div style="background:var(--bg-2);border-radius:12px;border:1px solid var(--line-soft);overflow:hidden;margin-bottom:16px">
           <table style="width:100%;border-collapse:collapse;font-size:12px">
@@ -881,19 +883,48 @@ function openInfo(tab) {
   document.getElementById("modalBg").classList.add("open");
 }
 
+/* badge pills for the profile, each with a hover explanation */
+function profileBadges(p,t){
+  const titleSub = t.min>0 ? `Achieved ${t.min}+ total points` : `Default rank for new players`;
+  let b=`<span class="badge title" style="--bc:${t.color}" data-tip-title="${t.name}" data-tip-sub="${titleSub}">${BADGE_GEM}<span>${t.name}</span></span>`;
+  if(p.premium) b+=`<span class="badge premium" data-tip-title="Premium" data-tip-sub="Gained premium status through the Discord">${STAR_SVG}<span>Premium</span></span>`;
+  if(isFullyRetired(p)) b+=`<span class="badge retired" data-tip-title="Retired" data-tip-sub="Fully retired in all tested gamemodes">${RETIRE_SVG}<span>Retired</span></span>`;
+  return b;
+}
+function profileTierCard(g,val){
+  const info=tierInfo(val), d=info.tier.slice(-1);
+  const rc=(info.retired||info.peak)?" retired":"";
+  const sub=`${info.tier} · ${tierPoints(info.tier)} points`;
+  return `<div class="tcard" data-tip-title="${tierState(info)}" data-tip-sub="${sub}"><div class="tcard-name">${g.name}</div><span class="gm-orb t${d}"><span class="ic">${g.icon}</span></span><span class="gm-rect t${d}${rc}">${info.tier}</span><div class="tcard-pts">${tierPoints(info.tier)} pts</div></div>`;
+}
+function profileEmptyCard(g){
+  return `<div class="tcard tcard-empty"><div class="tcard-name">${g.name}</div><span class="gm-orb empty"><span class="ic">${g.icon}</span></span><span class="gm-rect empty">–</span><div class="tcard-pts">Untested</div></div>`;
+}
 function openPlayer(name){
   const p=PLAYERS.find(x=>x.name===name);if(!p)return;
   const total=playerTotal(p),t=titleFor(total);
   const rank=PLAYERS.map(x=>({n:x.name,tot:playerTotal(x)})).sort((a,b)=>b.tot-a.tot).findIndex(x=>x.n===name)+1;
-  const tiers=GAMEMODES.filter(g=>p.tiers[g.id]).map(g=>{const info=tierInfo(p.tiers[g.id]);const tag=info.retired?`<span class="mt-tag">Retired</span>`:(info.peak?`<span class="mt-tag">Peak</span>`:"");return `<div class="mtier"><span class="mt-gm"><span class="ic">${g.icon}</span><span class="mt-gn">${g.name}</span></span><span class="mt-pts">${tierPoints(info.tier)} pts</span>${tag}${tierBadge(info.tier)}</div>`;}).join("")||`<div class="col-empty">No tiers recorded yet.</div>`;
+  const cards=GAMEMODES.map(g=>p.tiers[g.id]?profileTierCard(g,p.tiers[g.id]):profileEmptyCard(g)).join("");
+  const skin=`https://minotar.net/armor/body/${encodeURIComponent(name)}/100.png`;
+  const init=(name.replace(/[^a-zA-Z0-9]/g,"")[0]||"?").toUpperCase();
   document.getElementById("modal").innerHTML=`
     <button class="close-x" onclick="closeModal()">✕</button>
-    <div class="modal-head">${avatar(p.name)}
-      <div class="mh-info"><h3>${p.name}</h3>
-        <div class="mtitle" style="color:${t.color}">${accoladeIcon(t)}${t.name}</div>
-        <div class="mmeta"><span>Overall&nbsp;<b>#${rank}</b></span><span><b>${total}</b>&nbsp;points</span>${p.region?`<span>Region&nbsp;<b>${p.region}</b></span>`:""}</div>
-      </div></div>
-    <div class="modal-body"><h4>Gamemode Tiers</h4><div class="mtiers">${tiers}</div></div>`;
+    <div class="profile-head">
+      <div class="profile-skin">
+        <img src="${skin}" alt="${name}" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'">
+        <span class="skin-fallback">${init}</span>
+      </div>
+      <div class="profile-info">
+        <div class="profile-name"><span class="pn-text">${name}</span></div>
+        <div class="profile-badges">${profileBadges(p,t)}</div>
+        <div class="profile-stats">
+          <span class="pstat-rank">#${rank}</span>
+          <span class="pstat-pts"><b style="color:${t.color}">${total}</b> Total Points</span>
+          ${p.region?`<span class="pstat-region">${p.region}</span>`:""}
+        </div>
+      </div>
+    </div>
+    <div class="modal-body"><h4>Kit Tiers</h4><div class="tier-cards">${cards}</div></div>`;
   document.getElementById("modalBg").classList.add("open");
 }
 function closeModal(){document.getElementById("modalBg").classList.remove("open");}
@@ -930,25 +961,6 @@ const retiredChip=document.getElementById("filterRetired");
 const premiumChip=document.getElementById("filterPremium");
 retiredChip.onclick=()=>{hideRetired=!hideRetired;retiredChip.classList.toggle("active",hideRetired);render();};
 premiumChip.onclick=()=>{premiumOnly=!premiumOnly;premiumChip.classList.toggle("active",premiumOnly);render();};
-const subtierChip=document.getElementById("toggleSubTiers");
-subtierChip.onclick=()=>{
-  showSubTiers=!showSubTiers;
-  subtierChip.classList.toggle("active",showSubTiers);
-  
-  const filtered = GAMEMODES.filter(g => !!g.subtier === showSubTiers);
-  if(showSubTiers) {
-    // If switching to subtiers, Overall is hidden, so move to first subtier mode
-    if(activeTab === "overall" || (GM[activeTab] && !GM[activeTab].subtier)) {
-      if(filtered.length > 0) activeTab = filtered[0].id;
-    }
-  } else {
-    // Always return to Overall when leaving subtiers
-    activeTab = "overall";
-  }
-
-  buildTabs();
-  render();
-};
 
 /* ---- hover tooltip for tiers (works in Overall, gamemode columns, scroll-safe) ---- */
 const tipEl=document.createElement("div");tipEl.id="tip";document.body.appendChild(tipEl);
@@ -994,17 +1006,6 @@ async function init(){
     if(!res.ok) throw new Error("HTTP "+res.status);
     const DATA=await res.json();
     GAMEMODES=DATA.gamemodes; PLAYERS=DATA.players; POINTS=DATA.points; TITLES=DATA.titles;
-
-    const subTierList = [
-      {id: "cart", name: "Cart", icon: "🛒", subtier: true},
-      {id: "creeper", name: "Creeper", icon: "💥", subtier: true},
-      {id: "fireball", name: "Fireball", icon: "🔥", subtier: true},
-      {id: "spleef", name: "Spleef", icon: "❄️", subtier: true},
-      {id: "spearmace", name: "Spear Mace", icon: "⚔️", subtier: true},
-      {id: "pearlfight", name: "Pearl Fight", icon: "👁️", subtier: true}
-    ];
-    subTierList.forEach(s => { if (!GAMEMODES.find(g => g.id === s.id)) GAMEMODES.push(s); });
-
     GM=Object.fromEntries(GAMEMODES.map(g=>[g.id,g]));
     buildRegionFilter(); buildTabs(); render();
   }catch(e){
