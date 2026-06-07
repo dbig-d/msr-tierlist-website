@@ -194,6 +194,9 @@
         "dpot": "HT2",
         "npot": "HT2",
         "hsmp": "LT1"
+      },
+      "subtiers": {
+        "pearl": "HT3"
       }
     },
     {
