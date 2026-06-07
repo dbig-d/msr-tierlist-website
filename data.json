@@ -280,7 +280,10 @@
         "npot": "HT4",
         "hsmp": "HT3"
       },
-      "house": "yellow"
+      "house": "yellow",
+      "subtiers": {
+        "pearl": "LT2"
+      }
     },
     {
       "name": "Velox2102",
