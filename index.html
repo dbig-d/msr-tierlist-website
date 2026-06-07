@@ -253,15 +253,15 @@ main{max-width:1200px;margin:0 auto;padding:26px 20px 60px}
 .badge svg{width:13px;height:13px;flex:0 0 auto}
 .badge::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(110deg,transparent 38%,rgba(255,255,255,.5) 50%,transparent 62%);transform:translateX(-130%);animation:badgeShine 5s ease-in-out infinite}
 @keyframes badgeShine{0%,55%{transform:translateX(-130%)}100%{transform:translateX(130%)}}
-.badge.title{background:linear-gradient(135deg,color-mix(in srgb,var(--bc) 70%,#ffffff),var(--bc) 52%,color-mix(in srgb,var(--bc) 76%,#000000))}
-.badge.premium{background:linear-gradient(135deg,#cfe2ff,var(--accent) 52%,#5f86c8)}
-.badge.retired{background:linear-gradient(135deg,#5d6878,#39434f 52%,#23282f);color:#eef3fa}
-.badge.tester{background:linear-gradient(135deg,#ffc879,#e8862c 52%,#9c5a17)}
-.badge.subtester{background:linear-gradient(135deg,#4cbf7a,#1f7a45 52%,#0e4a29);color:#eef7ef}
-.badge.house-blue{background:linear-gradient(135deg,#5b8de6,#2f5fc0 52%,#163a86);color:#eef3fa}
-.badge.house-red{background:linear-gradient(135deg,#ff8f8f,#e0454b 52%,#8f1f25);color:#fff}
-.badge.house-yellow{background:linear-gradient(135deg,#ffe79a,#f5c542 52%,#bf931c)}
-.badge.house-green{background:linear-gradient(135deg,#8fe6ad,#54c66b 52%,#2c8645)}
+.badge.title{background:linear-gradient(135deg,color-mix(in srgb,var(--bc) 70%,#ffffff),var(--bc) 52%,color-mix(in srgb,var(--bc) 76%,#000000));box-shadow:0 0 13px color-mix(in srgb,var(--bc) 55%,transparent)}
+.badge.premium{background:linear-gradient(135deg,#cfe2ff,var(--accent) 52%,#5f86c8);box-shadow:0 0 13px rgba(145,184,255,.5)}
+.badge.retired{background:linear-gradient(135deg,#5d6878,#39434f 52%,#23282f);color:#eef3fa;box-shadow:0 0 12px rgba(120,134,156,.42)}
+.badge.tester{background:linear-gradient(135deg,#ffc879,#e8862c 52%,#9c5a17);box-shadow:0 0 13px rgba(232,134,44,.5)}
+.badge.subtester{background:linear-gradient(135deg,#a274ec,#6a3bc0 52%,#3a1d6e);color:#f1eafb;box-shadow:0 0 13px rgba(123,67,200,.55)}
+.badge.house-blue{background:linear-gradient(135deg,#5b8de6,#2f5fc0 52%,#163a86);color:#eef3fa;box-shadow:0 0 13px rgba(74,120,210,.5)}
+.badge.house-red{background:linear-gradient(135deg,#ff8f8f,#e0454b 52%,#8f1f25);color:#fff;box-shadow:0 0 13px rgba(224,69,75,.5)}
+.badge.house-yellow{background:linear-gradient(135deg,#ffe79a,#f5c542 52%,#bf931c);box-shadow:0 0 13px rgba(245,197,66,.48)}
+.badge.house-green{background:linear-gradient(135deg,#8fe6ad,#54c66b 52%,#2c8645);box-shadow:0 0 13px rgba(84,198,107,.48)}
 
 /* stacked tier tiles: gamemode orb on top, coloured tier rectangle below (mctiers style) */
 .gm-strip{display:flex;gap:7px;flex-wrap:nowrap;justify-content:flex-start;max-width:100%;overflow-x:auto;scrollbar-width:none}
@@ -334,7 +334,11 @@ main{max-width:1200px;margin:0 auto;padding:26px 20px 60px}
 .modal-bg{position:fixed;inset:0;z-index:100;background:rgba(4,7,12,.74);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:20px}
 .modal-bg.open{display:flex;animation:fade .2s}
 @keyframes fade{from{opacity:0}to{opacity:1}}
-.modal{background:linear-gradient(180deg,var(--panel),var(--bg-2));border:1px solid var(--line);border-radius:18px;max-width:620px;width:100%;max-height:88vh;overflow-y:auto;animation:pop .22s;box-shadow:0 30px 80px rgba(0,0,0,.6)}
+.modal{background:linear-gradient(180deg,var(--panel),var(--bg-2));border:1px solid var(--line);border-radius:18px;max-width:620px;width:100%;max-height:88vh;overflow-y:auto;animation:pop .22s;box-shadow:0 30px 80px rgba(0,0,0,.6);scrollbar-width:thin;scrollbar-color:#243650 transparent}
+.modal::-webkit-scrollbar{width:11px}
+.modal::-webkit-scrollbar-track{background:transparent}
+.modal::-webkit-scrollbar-thumb{background:#243650;border-radius:10px;border:3px solid transparent;background-clip:padding-box}
+.modal::-webkit-scrollbar-thumb:hover{background:#2e425e}
 @keyframes pop{from{opacity:0;transform:scale(.95) translateY(10px)}to{opacity:1;transform:none}}
 .modal-head{position:relative;padding:26px 24px 20px;display:flex;gap:16px;align-items:center;border-bottom:1px solid var(--line-soft);background:radial-gradient(420px 130px at 18% 0%,rgba(123,196,255,.1),transparent)}
 .modal-head .avatar{width:66px;height:66px;border-radius:12px}
@@ -370,7 +374,7 @@ main{max-width:1200px;margin:0 auto;padding:26px 20px 60px}
 .profile-stats{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
 .pstat-rank{font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:13px;background:var(--panel-2);border:1px solid var(--line);border-radius:8px;padding:5px 11px;color:var(--text)}
 .pstat-pts{font-size:12px;letter-spacing:.5px;text-transform:uppercase;color:var(--text-faint);font-weight:600;display:inline-flex;align-items:baseline;gap:6px}
-.pstat-pts b{font-family:'Chakra Petch',sans-serif;font-size:26px;line-height:1}
+.pstat-pts b{font-family:'Chakra Petch',sans-serif;font-size:26px;line-height:1;text-shadow:0 0 13px color-mix(in srgb,currentColor 60%,transparent)}
 .pstat-region{font-size:11px;font-weight:700;letter-spacing:.5px;padding:4px 9px;border-radius:6px;background:var(--panel-2);border:1px solid var(--line);color:var(--text-dim)}
 
 .tier-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(98px,1fr));gap:10px}
@@ -554,22 +558,23 @@ const HOUSES={blue:{name:"Blue"},red:{name:"Red"},yellow:{name:"Yellow"},green:{
    title > tester > subtier tester > retired > house > premium.
    Overall shows the top 3; the profile shows all. */
 function badgeDefs(p,t){
-  const arr=[];
+  const out=[];
   const titleSub = t.min>0 ? `Achieved ${t.min}+ total points` : `Default rank for new players`;
-  arr.push({cls:"title",style:`--bc:${t.color}`,icon:BADGE_GEM,label:t.name,tipT:t.name,tipS:titleSub});
-  if(p.tester) arr.push({cls:"tester",icon:TESTER_SVG,label:"Tester",tipT:"Tester",tipS:"Main tester for unranked players"});
-  if(p.subtester){const gm=SUBGM[p.subtester]; const nm=gm?gm.name:p.subtester; arr.push({cls:"subtester",icon:TESTER_SVG,label:"Subtier Tester",tipT:"Subtier Tester",tipS:`Main tester for ${nm}`});}
-  if(isFullyRetired(p)) arr.push({cls:"retired",icon:RETIRE_SVG,label:"Retired",tipT:"Retired",tipS:"Fully retired in all tested gamemodes"});
-  if(p.house&&HOUSES[p.house]) arr.push({cls:"house-"+p.house,icon:HOUSE_SVG,label:HOUSES[p.house].name+" House",tipT:HOUSES[p.house].name+" House",tipS:HOUSES[p.house].name+" House member"});
-  if(p.premium) arr.push({cls:"premium",icon:STAR_SVG,label:"Premium",tipT:"Premium",tipS:"Gained premium status through the Discord"});
-  return arr;
+  // Slot 1 — points / title (always shown)
+  out.push({cls:"title",style:`--bc:${t.color}`,icon:BADGE_GEM,label:t.name,tipT:t.name,tipS:titleSub});
+  // Slot 2 — house (only if the player is in one)
+  if(p.house&&HOUSES[p.house]) out.push({cls:"house-"+p.house,icon:HOUSE_SVG,label:HOUSES[p.house].name+" House",tipT:HOUSES[p.house].name+" House",tipS:HOUSES[p.house].name+" House member"});
+  // Slot 3 — tester, else subtier tester, else retired, else premium, else nothing
+  if(p.tester) out.push({cls:"tester",icon:TESTER_SVG,label:"Tester",tipT:"Tester",tipS:"Main tester for unranked players"});
+  else if(p.subtester){const gm=SUBGM[p.subtester]; const nm=gm?gm.name:p.subtester; out.push({cls:"subtester",icon:TESTER_SVG,label:"Subtier Tester",tipT:"Subtier Tester",tipS:`Main tester for ${nm}`});}
+  else if(isFullyRetired(p)) out.push({cls:"retired",icon:RETIRE_SVG,label:"Retired",tipT:"Retired",tipS:"Fully retired in all tested gamemodes"});
+  else if(p.premium) out.push({cls:"premium",icon:STAR_SVG,label:"Premium",tipT:"Premium",tipS:"Gained premium status through the Discord"});
+  return out;
 }
-function renderBadges(p,t,cap){
-  let arr=badgeDefs(p,t);
-  if(cap) arr=arr.slice(0,cap);
-  return arr.map(b=>`<span class="badge ${b.cls}"${b.style?` style="${b.style}"`:""} data-tip-title="${b.tipT}" data-tip-sub="${b.tipS}">${b.icon}<span>${b.label}</span></span>`).join("");
+function renderBadges(p,t){
+  return badgeDefs(p,t).map(b=>`<span class="badge ${b.cls}"${b.style?` style="${b.style}"`:""} data-tip-title="${b.tipT}" data-tip-sub="${b.tipS}">${b.icon}<span>${b.label}</span></span>`).join("");
 }
-function playerBadges(p,t){ return `<div class="badges">${renderBadges(p,t,3)}</div>`; }
+function playerBadges(p,t){ return `<div class="badges">${renderBadges(p,t)}</div>`; }
 
 /* accolade/title emblem. If a title has an "icon" in data.json it's used;
    otherwise a faceted gem is drawn in the title colour (easy to swap later). */
@@ -948,8 +953,8 @@ function openInfo(tab) {
   document.getElementById("modalBg").classList.add("open");
 }
 
-/* badge pills for the profile: all of them, each with a hover explanation */
-function profileBadges(p,t){ return renderBadges(p,t,0); }
+/* badge pills for the profile: same three-slot system, each with a hover explanation */
+function profileBadges(p,t){ return renderBadges(p,t); }
 function profileTierCard(g,val){
   const info=tierInfo(val), d=info.tier.slice(-1);
   const rc=(info.retired||info.peak)?" retired":"";
