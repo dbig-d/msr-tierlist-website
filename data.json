@@ -472,7 +472,8 @@
         "axe": "HT4",
         "uhc": "LT5",
         "mace": "HT5"
-      }
+      },
+      "house": "green"
     },
     {
       "name": "brandvogel",
