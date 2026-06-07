@@ -340,6 +340,9 @@
         "mace": "LT3",
         "dpot": "LT2",
         "hsmp": "LT2"
+      },
+      "subtiers": {
+        "pearl": "LT4"
       }
     },
     {
