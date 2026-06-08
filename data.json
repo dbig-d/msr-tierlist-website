@@ -370,6 +370,9 @@
         "dpot": "HT5",
         "npot": "HT5",
         "hsmp": "LT3"
+      },
+      "subtiers": {
+        "creeper": "LT2"
       }
     },
     {
