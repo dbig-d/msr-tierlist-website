@@ -24,6 +24,7 @@
 
   --accent:#91b8ff;     /* brand icy blue */
   --accent-2:#bee6ff;   /* brand light blue */
+  --glow-rgb: 123, 196, 255;
 
   /* Tier accent ramp — 1 gold, 2 silver, 3 bronze, 4 purple, 5 gray */
   --t1:#f5b73c;  /* gold   */
@@ -31,6 +32,21 @@
   --t3:#cb7e47;  /* bronze */
   --t4:#6486ad;  /* unsaturated steel blue */
   --t5:#7e8794;  /* gray   */
+}
+
+.sub-mode {
+  --bg: #c2c7cc;         /* snowy light blue-gray */
+  --bg-2: #e2e8f0;       /* frost gray */
+  --panel: #ffffff;      /* pure white */
+  --panel-2: #f8fafc;    /* subtle snow */
+  --line: #cbd5e1;       /* icy lines */
+  --line-soft: #e2e8f0;
+  --text: #1e293b;       /* deep navy for readability */
+  --text-dim: #475569;
+  --text-faint: #000000;
+  --accent: #91b8ff;     /* icy blue */
+  --accent-2: #91b8ff;
+  --glow-rgb: 14, 165, 233;
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
@@ -45,8 +61,8 @@ body{
 body::before{
   content:"";position:fixed;inset:0;z-index:-3;
   background:
-    radial-gradient(900px 520px at 82% -12%, rgba(123,196,255,.13), transparent 60%),
-    radial-gradient(760px 600px at -5% 105%, rgba(123,196,255,.07), transparent 55%),
+    radial-gradient(900px 520px at 82% -12%, rgba(var(--glow-rgb),.13), transparent 60%),
+    radial-gradient(760px 600px at -5% 105%, rgba(var(--glow-rgb),.07), transparent 55%),
     linear-gradient(180deg, var(--bg) 75%, var(--accent) 100%);
 }
 body::after{
@@ -60,7 +76,7 @@ body::after{
 
 /* Floating Bubbles Effect */
 .bubbles-container{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;pointer-events:none;overflow:hidden}
-.bubble{position:absolute;bottom:-100px;background:rgba(123,196,255,0.15);border-radius:50%;animation:float-bubble 15s infinite ease-in}
+.bubble{position:absolute;bottom:-100px;background:rgba(var(--glow-rgb),0.15);border-radius:50%;animation:float-bubble 15s infinite ease-in}
 .bubble:nth-child(1){width:40px;height:40px;left:10%;animation-duration:12s;animation-delay:1s}
 .bubble:nth-child(2){width:20px;height:20px;left:30%;animation-duration:18s;animation-delay:3s}
 .bubble:nth-child(3){width:50px;height:50px;left:55%;animation-duration:15s;animation-delay:0s}
@@ -96,8 +112,8 @@ header{
 .brand{display:flex;align-items:center;gap:13px}
 .logo-img{
   width:42px;height:42px;border-radius:10px;display:block;
-  image-rendering:pixelated;border:1px solid rgba(123,196,255,.4);
-  box-shadow:0 2px 12px rgba(123,196,255,.22), inset 0 1px 0 rgba(255,255,255,.1);
+  image-rendering:pixelated;border:1px solid rgba(var(--glow-rgb),.4);
+  box-shadow:0 2px 12px rgba(var(--glow-rgb),.22), inset 0 1px 0 rgba(255,255,255,.1);
 }
 .brand-text h1{
   font-family:'Chakra Petch',sans-serif;font-size:26px;font-weight:700;letter-spacing:.5px;line-height:1;
@@ -105,11 +121,12 @@ header{
   background-size:220% auto;
   -webkit-background-clip: text; background-clip: text;
   -webkit-text-fill-color: transparent; color:transparent;
-  filter:drop-shadow(0 0 10px rgba(123,196,255,.4));
+  filter:drop-shadow(0 0 10px rgba(var(--glow-rgb),.4));
   animation:brandShine 7s linear infinite;
 }
 @keyframes brandShine{0%{background-position:0 0}100%{background-position:220% 0}}
 .brand-text p{font-size:11px;color:white;letter-spacing:1.6px;text-transform:uppercase;margin-top:4px;opacity:.85}
+.sub-mode .brand-text p{color:var(--text-dim)}
 
 .head-tools{margin-left:auto;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .search-wrap{position:relative}
@@ -119,7 +136,7 @@ input[type=search]{
   background:var(--panel);border:1px solid var(--line);
   border-radius:9px;padding:9px 12px 9px 34px;width:220px;outline:none;transition:.18s;
 }
-input[type=search]:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(123,196,255,.15)}
+input[type=search]:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(var(--glow-rgb),.15)}
 input[type=search]::placeholder{color:var(--text-faint)}
 select{
   font-family:inherit;font-size:14px;color:var(--text);
@@ -139,7 +156,7 @@ select{
 .filter-chip{display:flex;align-items:center;gap:7px;background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:8px 11px;font-size:13px;font-weight:600;color:var(--text-dim);white-space:nowrap;transition:.16s;flex-shrink:0}
 .filter-chip svg{width:15px;height:15px;flex-shrink:0}
 .filter-chip:hover{color:var(--text);border-color:var(--accent)}
-.filter-chip.active{color:var(--accent);border-color:var(--accent);background:rgba(123,196,255,.12)}
+.filter-chip.active{color:var(--accent);border-color:var(--accent);background:rgba(var(--glow-rgb),.12)}
 
 select:focus{border-color:var(--accent)}
 
@@ -158,7 +175,68 @@ select:focus{border-color:var(--accent)}
  @keyframes slide-in { from { opacity: 0; transform: translateX(30px); } }
  @keyframes slide-out { to { opacity: 0; transform: translateX(-30px); } }
 
-.tabs{position:relative;max-width:1200px;margin:0 auto;padding:0 12px;display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;justify-content:safe center}
+ /* Overall Mode Switch Animations */
+ html.switching-modes::view-transition-backdrop {
+   background: #070c14; /* Fallback for the transition void */
+ }
+ /* Directional gradients to match the theme shift */
+ html.switching-to-sub::view-transition-backdrop {
+   background: linear-gradient(180deg, #070c14 0%, #c2c7cc 100%);
+ }
+ html.switching-to-main::view-transition-backdrop {
+   background: linear-gradient(0deg, #070c14 0%, #c2c7cc 100%);
+ }
+
+ /* Directional Motion for root and content */
+ ::view-transition-group(root), ::view-transition-group(tab-content), ::view-transition-group(tabs-list) { will-change: transform; }
+
+ html.switching-to-sub::view-transition-old(root),
+ html.switching-to-sub::view-transition-old(tab-content) { animation: 600ms ease-in both mode-exit-down; }
+ html.switching-to-sub::view-transition-new(root) { animation: 800ms cubic-bezier(0.16, 1, 0.3, 1) both mode-enter-down; animation-delay: 500ms; }
+ html.switching-to-sub::view-transition-new(tab-content) { animation: 800ms cubic-bezier(0.16, 1, 0.3, 1) both mode-enter-down; animation-delay: 550ms; }
+
+ html.switching-to-main::view-transition-old(root),
+ html.switching-to-main::view-transition-old(tab-content) { animation: 600ms ease-in both mode-exit-up; }
+ html.switching-to-main::view-transition-new(root) { animation: 800ms cubic-bezier(0.16, 1, 0.3, 1) both mode-enter-up; animation-delay: 500ms; }
+ html.switching-to-main::view-transition-new(tab-content) { animation: 800ms cubic-bezier(0.16, 1, 0.3, 1) both mode-enter-up; animation-delay: 550ms; }
+
+ @keyframes mode-exit-down { to { transform: translateY(-100vh); opacity: 0; } }
+ @keyframes mode-enter-down { from { transform: translateY(100vh); opacity: 0; } }
+ @keyframes mode-exit-up { to { transform: translateY(100vh); opacity: 0; } }
+ @keyframes mode-enter-up { from { transform: translateY(-100vh); opacity: 0; } }
+
+ /* Directional Motion for tabs-list */
+ html.switching-to-sub::view-transition-old(tabs-list) { animation: 600ms ease-in both tabs-exit-down; }
+ html.switching-to-sub::view-transition-new(tabs-list) { animation: 900ms cubic-bezier(0.16, 1, 0.3, 1) both tabs-enter-down; animation-delay: 500ms; }
+
+ html.switching-to-main::view-transition-old(tabs-list) { animation: 600ms ease-in both tabs-exit-up; }
+ html.switching-to-main::view-transition-new(tabs-list) { animation: 900ms cubic-bezier(0.16, 1, 0.3, 1) both tabs-enter-up; animation-delay: 500ms; }
+
+ @keyframes tabs-exit-down { to { transform: translateY(-120px); opacity: 0; } }
+ @keyframes tabs-enter-down { from { transform: translateY(120px); opacity: 0; } }
+ @keyframes tabs-exit-up { to { transform: translateY(120px); opacity: 0; } }
+ @keyframes tabs-enter-up { from { transform: translateY(-120px); opacity: 0; } }
+
+ /* Completely hide the active tab indicator's transition group during mode switches.
+    This prevents the underline from "ghosting" or sliding horizontally while the rest of the UI moves vertically. */
+ html.switching-modes::view-transition-group(active-tab-indicator) {
+   display: none;
+ }
+
+.sub-mode .tabs-bar {
+  background: rgba(241, 245, 249, 0.84);
+}
+
+/* Force player names to be solid black in the profile modal during subtier mode */
+.sub-mode .profile-name .pn-text {
+  background: none;
+  -webkit-text-fill-color: #000;
+  filter: none;
+  animation: none;
+}
+
+
+.tabs{view-transition-name: tabs-list;position:relative;max-width:1200px;margin:0 auto;padding:0 12px;display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;justify-content:safe center}
 .tabs::-webkit-scrollbar{display:none}
 .tab{
   flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:7px;
@@ -187,7 +265,7 @@ select:focus{border-color:var(--accent)}
 .tab-switch .lb{color:var(--accent);font-weight:700}
 .tab-switch::before{content:"";position:absolute;left:-1px;top:22%;height:56%;width:1px;background:var(--line-soft)}
 .tab-switch{position:relative}
-.tab.active{color:var(--text);background:linear-gradient(180deg,var(--panel),rgba(16,26,43,0))}
+.tab.active{color:var(--text);background:linear-gradient(180deg,var(--panel),transparent)}
 .tab.active .ic{opacity:1}
 
 /* ---------- Main ---------- */
@@ -226,7 +304,7 @@ main{max-width:1200px;margin:0 auto;padding:26px 20px 60px}
 .row.top1 .pn-text{background-image:linear-gradient(110deg,var(--t1) 0%,var(--t1) 38%,#fff 50%,var(--t1) 62%,var(--t1) 100%);filter:drop-shadow(0 0 7px rgba(245,183,60,.45))}
 .row.top2 .pn-text{background-image:linear-gradient(110deg,var(--t2) 0%,var(--t2) 38%,#fff 50%,var(--t2) 62%,var(--t2) 100%);filter:drop-shadow(0 0 7px rgba(195,206,221,.4))}
 .row.top3 .pn-text{background-image:linear-gradient(110deg,var(--t3) 0%,var(--t3) 38%,#fff 50%,var(--t3) 62%,var(--t3) 100%);filter:drop-shadow(0 0 7px rgba(203,126,71,.45))}
-.row.premium{border-color:rgba(123,196,255,.5);box-shadow:0 0 0 1px rgba(123,196,255,.14), 0 6px 26px rgba(123,196,255,.09)}
+.row.premium{border-color:rgba(var(--glow-rgb),.5);box-shadow:0 0 0 1px rgba(var(--glow-rgb),.14), 0 6px 26px rgba(var(--glow-rgb),.09)}
 .rank small{display:block;font-size:9px;font-weight:600;letter-spacing:1px;color:var(--text-faint)}
 
 .avatar{position:relative;width:42px;height:42px;border-radius:8px;overflow:hidden;background:var(--panel-2);border:1px solid var(--line)}
@@ -238,7 +316,7 @@ main{max-width:1200px;margin:0 auto;padding:26px 20px 60px}
   background:linear-gradient(110deg,#dfe9f7 0%,#dfe9f7 38%,#ffffff 50%,#dfe9f7 62%,#dfe9f7 100%);
   background-size:230% 100%;
   -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
-  filter:drop-shadow(0 0 7px rgba(174,210,255,.42));
+  filter:drop-shadow(0 0 7px rgba(var(--glow-rgb),.42));
   animation:nameShine 5.5s linear infinite;
 }
 @keyframes nameShine{0%{background-position:130% 0}100%{background-position:-30% 0}}
@@ -261,7 +339,7 @@ main{max-width:1200px;margin:0 auto;padding:26px 20px 60px}
 .badge::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(110deg,transparent 38%,rgba(255,255,255,.5) 50%,transparent 62%);transform:translateX(-130%);animation:badgeShine 5s ease-in-out infinite}
 @keyframes badgeShine{0%,55%{transform:translateX(-130%)}100%{transform:translateX(130%)}}
 .badge.title{background:linear-gradient(135deg,color-mix(in srgb,var(--bc) 70%,#ffffff),var(--bc) 52%,color-mix(in srgb,var(--bc) 76%,#000000));box-shadow:0 0 13px color-mix(in srgb,var(--bc) 55%,transparent)}
-.badge.premium{background:linear-gradient(135deg,#cfe2ff,var(--accent) 52%,#5f86c8);box-shadow:0 0 13px rgba(145,184,255,.5)}
+.badge.premium{background:linear-gradient(135deg,#cfe2ff,var(--accent) 52%,#5f86c8);box-shadow:0 0 13px rgba(var(--glow-rgb),.5)}
 .badge.retired{background:linear-gradient(135deg,#5d6878,#39434f 52%,#23282f);color:#eef3fa;box-shadow:0 0 12px rgba(120,134,156,.42)}
 .badge.tester{background:linear-gradient(135deg,#ffc879,#e8862c 52%,#9c5a17);box-shadow:0 0 13px rgba(232,134,44,.5)}
 .badge.subtester{background:linear-gradient(135deg,#a274ec,#6a3bc0 52%,#3a1d6e);color:#f1eafb;box-shadow:0 0 13px rgba(123,67,200,.55)}
@@ -347,7 +425,7 @@ main{max-width:1200px;margin:0 auto;padding:26px 20px 60px}
 .modal::-webkit-scrollbar-thumb{background:#243650;border-radius:10px;border:3px solid transparent;background-clip:padding-box}
 .modal::-webkit-scrollbar-thumb:hover{background:#2e425e}
 @keyframes pop{from{opacity:0;transform:scale(.95) translateY(10px)}to{opacity:1;transform:none}}
-.modal-head{position:relative;padding:26px 24px 20px;display:flex;gap:16px;align-items:center;border-bottom:1px solid var(--line-soft);background:radial-gradient(420px 130px at 18% 0%,rgba(123,196,255,.1),transparent)}
+.modal-head{position:relative;padding:26px 24px 20px;display:flex;gap:16px;align-items:center;border-bottom:1px solid var(--line-soft);background:radial-gradient(420px 130px at 18% 0%,rgba(var(--glow-rgb),.1),transparent)}
 .modal-head .avatar{width:66px;height:66px;border-radius:12px}
 .modal-head .mh-info h3{font-family:'Chakra Petch';font-size:23px;font-weight:700;word-break:break-word}
 .modal-head .mh-info .mtitle{font-size:14px;margin-top:3px;display:flex;gap:7px;align-items:center}
@@ -369,7 +447,7 @@ main{max-width:1200px;margin:0 auto;padding:26px 20px 60px}
 .mtier .tb{flex-shrink:0}
 
 /* ---------- Player profile (modal) ---------- */
-.profile-head{display:flex;gap:24px;align-items:center;padding:26px 26px 20px;border-bottom:1px solid var(--line-soft);background:radial-gradient(480px 170px at 22% 0%,rgba(123,196,255,.12),transparent);position:relative}
+.profile-head{display:flex;gap:24px;align-items:center;padding:26px 26px 20px;border-bottom:1px solid var(--line-soft);background:radial-gradient(480px 170px at 22% 0%,rgba(var(--glow-rgb),.12),transparent);position:relative}
 .profile-skin{flex:0 0 auto;width:104px;min-height:200px;display:flex;align-items:flex-end;justify-content:center}
 .profile-skin img{height:200px;width:auto;image-rendering:pixelated;filter:drop-shadow(0 12px 20px rgba(0,0,0,.55));animation:skinSway 3.6s ease-in-out infinite}
 .skin-fallback{display:none;width:96px;height:170px;place-items:center;font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:46px;color:var(--text-dim);background:linear-gradient(160deg,#1d2c40,#13202f);border:1px solid var(--line);border-radius:12px}
@@ -409,7 +487,7 @@ main{max-width:1200px;margin:0 auto;padding:26px 20px 60px}
 .board-head .bh-badges{display:flex;align-items:center;justify-content:center;gap:5px}
 .board-head .bh-tiers{text-align:right}
 .bh-info{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;background:var(--panel-2);border:1px solid var(--line);color:var(--accent);font-size:10px;font-weight:700;font-style:italic;font-family:'Chakra Petch',sans-serif;cursor:pointer;transition:.15s;text-transform:none;letter-spacing:0}
-.bh-info:hover{border-color:var(--accent);background:rgba(123,196,255,.12)}
+.bh-info:hover{border-color:var(--accent);background:rgba(var(--glow-rgb),.12)}
 footer{text-align:center;color:var(--text-faint);font-size:12.5px;padding:30px 20px 50px;line-height:1.7}
 footer b{color:var(--text-dim)}
 .empty-state{text-align:center;color:var(--text-faint);padding:60px 20px;font-size:15px}
@@ -440,12 +518,12 @@ footer b{color:var(--text-dim)}
 }
 @media(max-width:430px){.pname{font-size:15px}.avatar{width:38px;height:38px}}
 /* ---------- Hover tooltip ---------- */
-#tip{position:fixed;z-index:200;pointer-events:none;opacity:0;transform:translateY(4px);transition:opacity .13s ease,transform .13s ease;background:linear-gradient(180deg,#16243a,#0d1524);border:1px solid var(--line);border-radius:9px;padding:7px 11px;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,.5)}
+#tip{position:fixed;z-index:200;pointer-events:none;opacity:0;transform:translateY(4px);transition:opacity .13s ease,transform .13s ease;background:linear-gradient(180deg,var(--panel-2),var(--bg-2));border:1px solid var(--line);border-radius:9px;padding:7px 11px;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,.5)}
 #tip.show{opacity:1;transform:translateY(0)}
 #tip .tip-t{display:block;font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:13px;color:var(--text);letter-spacing:.3px;white-space:nowrap}
 #tip .tip-s{display:block;font-size:11px;color:var(--text-dim);margin-top:2px;white-space:nowrap}
-#tip::after{content:"";position:absolute;left:50%;top:100%;transform:translateX(-50%);border:5px solid transparent;border-top-color:#0d1524}
-#tip.below::after{top:auto;bottom:100%;border-top-color:transparent;border-bottom-color:#16243a}
+#tip::after{content:"";position:absolute;left:50%;top:100%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--bg-2)}
+#tip.below::after{top:auto;bottom:100%;border-top-color:transparent;border-bottom-color:var(--panel-2)}
 </style>
 </head>
 <body>
@@ -649,13 +727,24 @@ function buildTabs(){
 }
 
 function toggleTabMode(){
+  const html = document.documentElement;
+  const directionClass = tabMode === "main" ? "switching-to-sub" : "switching-to-main";
   const update=()=>{
     tabMode = tabMode==="main" ? "sub" : "main";
+    document.body.classList.toggle('sub-mode', tabMode === 'sub');
     activeTab = tabMode==="main" ? "overall" : (SUBGAMEMODES[0] && SUBGAMEMODES[0].id);
     buildTabs();
     render();
   };
-  if(document.startViewTransition) document.startViewTransition(update); else update();
+  if(document.startViewTransition) {
+    html.classList.add("switching-modes", directionClass);
+    const transition = document.startViewTransition(update);
+    transition.finished.finally(() => {
+      html.classList.remove("switching-modes", directionClass);
+    });
+  } else {
+    update();
+  }
 }
 
 function matchPlayer(p){
