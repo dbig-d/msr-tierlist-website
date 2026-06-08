@@ -611,7 +611,7 @@ const tierInfo  = v => (typeof v==="string") ? {tier:v,retired:false,peak:false}
 const tierPoints = v => POINTS[tierCode(v)] || 0;
 const tierDigit  = t => tierCode(t).slice(-1);
 const tierKind   = t => tierCode(t).slice(0,2).toLowerCase();
-const playerTotal = p => Object.values(p.tiers).reduce((s,v)=>s+tierPoints(v),0);
+const playerTotal = p => p.computedTotal !== undefined ? p.computedTotal : (p.computedTotal = Object.values(p.tiers).reduce((s,v)=>s+tierPoints(v),0));
 const titleFor = pts => TITLES.find(t=>pts>=t.min);
 const tierState = info => info.retired ? "Retired Tier" : (info.peak ? "Peak Tier" : "Tier");
 
@@ -678,6 +678,7 @@ function avatar(name, cls=""){
 }
 
 let activeTab="overall", query="", region="", hideRetired=false, premiumOnly=false, testerOnly=false, houseFilter="off", tabMode="main";
+let visibleCount = 60;
 const isFullyRetired = p => {const v=Object.values(p.tiers); return v.length>0 && v.every(x=>tierInfo(x).retired);};
 
 /* region filter (auto-hides if no regions present) */
@@ -715,6 +716,7 @@ function buildTabs(){
     if(b.dataset.switch){ toggleTabMode(); return; }
     const updateUI = () => {
       activeTab = b.dataset.tab;
+      visibleCount = 60;
       buildTabs();
       render();
     };
@@ -731,6 +733,7 @@ function toggleTabMode(){
   const directionClass = tabMode === "main" ? "switching-to-sub" : "switching-to-main";
   const update=()=>{
     tabMode = tabMode==="main" ? "sub" : "main";
+    visibleCount = 60;
     document.body.classList.toggle('sub-mode', tabMode === 'sub');
     activeTab = tabMode==="main" ? "overall" : (SUBGAMEMODES[0] && SUBGAMEMODES[0].id);
     buildTabs();
@@ -760,9 +763,11 @@ function matchPlayer(p){
 }
 
 function renderOverall(){
-  const ranked=PLAYERS.map(p=>({p,total:playerTotal(p)}))
+  const allRanked = PLAYERS.map(p=>({p,total:playerTotal(p)}))
     .sort((a,b)=>b.total-a.total||a.p.name.localeCompare(b.p.name))
     .map((x,i)=>({...x,rank:i+1})).filter(x=>matchPlayer(x.p) && !(hideRetired && isFullyRetired(x.p)));
+
+  const ranked = allRanked.slice(0, visibleCount);
   const tp=PLAYERS.length, modes=GAMEMODES.length;
   const tested=PLAYERS.reduce((s,p)=>s+Object.keys(p.tiers).length,0);
 
@@ -772,7 +777,7 @@ function renderOverall(){
     <div class="stat"><span class="n">${tested}</span><span class="l">Tier Placements</span></div>
   </div>`;
 
-  if(!ranked.length){document.getElementById("content").innerHTML=html+`<div class="empty-state">No players match your search.</div>`;return;}
+  if(!allRanked.length){document.getElementById("content").innerHTML=html+`<div class="empty-state">No players match your search.</div>`;return;}
 
   html+=`<div class="board">
   <div class="board-head">
@@ -799,8 +804,16 @@ function renderOverall(){
     </div>`;
   });
   html+=`</div>`;
+
+  if (allRanked.length > visibleCount) {
+    html += `<div style="text-align:center;padding:30px 0;">
+      <button class="filter-chip" style="margin:0 auto;padding:12px 24px;font-size:14px" onclick="visibleCount+=100;render();">
+        Load More (${allRanked.length - visibleCount} players remaining)
+      </button>
+    </div>`;
+  }
+
   document.getElementById("content").innerHTML=html;
-  bindRows();
 }
 
 function renderGamemode(gid){
@@ -821,7 +834,6 @@ function renderGamemode(gid){
   });
   html+=`</div>`;
   document.getElementById("content").innerHTML=html;
-  bindRows();
 }
 
 function openInfo(tab) {
@@ -1094,7 +1106,10 @@ function closeModal(){document.getElementById("modalBg").classList.remove("open"
 document.getElementById("modalBg").onclick=e=>{if(e.target.id==="modalBg")closeModal();};
 document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal();});
 document.getElementById("infoBtn").onclick = openInfo;
-function bindRows(){document.querySelectorAll("[data-player]").forEach(el=>el.onclick=()=>openPlayer(decodeURIComponent(el.dataset.player)));}
+document.getElementById("content").addEventListener("click", e => {
+  const el = e.target.closest("[data-player]");
+  if (el) openPlayer(decodeURIComponent(el.dataset.player));
+});
 
 function render(){
   const overlay = document.getElementById('tabOverlay');
@@ -1116,8 +1131,8 @@ function render(){
   }
   (tabMode==="main" && activeTab==="overall") ? renderOverall() : renderGamemode(activeTab);
 }
-document.getElementById("search").oninput=e=>{query=e.target.value.trim().toLowerCase();render();};
-document.getElementById("regionFilter").onchange=e=>{region=e.target.value;render();};
+document.getElementById("search").oninput=e=>{query=e.target.value.trim().toLowerCase();visibleCount=60;render();};
+document.getElementById("regionFilter").onchange=e=>{region=e.target.value;visibleCount=60;render();};
 
 /* ---- filter toggles (Hide Retired / Premium only) ---- */
 const retiredChip=document.getElementById("filterRetired");
@@ -1188,6 +1203,7 @@ async function init(){
     if(!res.ok) throw new Error("HTTP "+res.status);
     const DATA=await res.json();
     GAMEMODES=DATA.gamemodes; PLAYERS=DATA.players; POINTS=DATA.points; TITLES=DATA.titles;
+    PLAYERS.forEach(p => p.computedTotal = playerTotal(p));
     SUBGAMEMODES=DATA.subgamemodes||[];
     GM=Object.fromEntries(GAMEMODES.map(g=>[g.id,g]));
     SUBGM=Object.fromEntries(SUBGAMEMODES.map(g=>[g.id,g]));
