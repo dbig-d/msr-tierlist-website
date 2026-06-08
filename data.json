@@ -257,7 +257,8 @@
         "hsmp": "HT2"
       },
       "subtiers": {
-        "cart": "LT3"
+        "cart": "LT3",
+        "fireball": "LT2"
       }
     },
     {
