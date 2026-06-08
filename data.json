@@ -104,32 +104,32 @@
     {
       "id": "cart",
       "name": "Cart",
-      "icon": ""
+      "icon": "<img src='Images/Icons/Subtiers/TNT Minecart.png' style='height:1em; vertical-align:middle; transform:scale(1.5);'>"
     },
     {
       "id": "pearl",
       "name": "Pearl Fight",
-      "icon": ""
+      "icon": "<img src='Images/Icons/Subtiers/Ender Pearl.png' style='height:1em; vertical-align:middle; transform:scale(1.5);'>"
     },
     {
       "id": "fireball",
       "name": "Fireball",
-      "icon": ""
+      "icon": "<img src='Images/Icons/Subtiers/Fire Charge.png' style='height:1em; vertical-align:middle; transform:scale(1.5);'>"
     },
     {
       "id": "creeper",
       "name": "Creeper",
-      "icon": ""
+      "icon": "<img src='Images/Icons/Subtiers/Creeper Spawn Egg.png' style='height:1em; vertical-align:middle; transform:scale(1.5);'>"
     },
     {
       "id": "spleef",
       "name": "Spleef",
-      "icon": ""
+      "icon": "<img src='Images/Icons/Subtiers/Diamond Shovel.png' style='height:1em; vertical-align:middle; transform:scale(1.5);'>"
     },
     {
       "id": "spearmace",
       "name": "Spear Mace",
-      "icon": ""
+      "icon": "<img src='Images/Icons/Subtiers/Spear Mace.png' style='height:1em; vertical-align:middle; transform:scale(1.5);'>"
     }
   ],
   "players": [
