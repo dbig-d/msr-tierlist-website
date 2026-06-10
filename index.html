@@ -711,26 +711,32 @@ const DEV_SVG=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke
 const SWITCH_SVG=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h13l-3-3M20 16H7l3 3"/></svg>`;
 const HOUSES={blue:{name:"Blue"},red:{name:"Red"},yellow:{name:"Yellow"},green:{name:"Green"}};
 
-/* Build every badge a player has, in priority order:
-   title > house > developer > tester > subtier tester > retired > premium.
-   Overall shows the top 3; the profile shows all. */
-function badgeDefs(p,t){
+/* Build the badges a player has.
+   Slot 1 = title/points, slot 2 = house, slot 3 = a priority list:
+   developer > tester > subtier tester > retired > premium.
+   Overall (allSlot3=false) shows only the top slot-3 badge;
+   the profile (allSlot3=true) shows every slot-3 badge the player has. */
+function badgeDefs(p,t,allSlot3){
   const out=[];
   const titleSub = t.min>0 ? `Achieved ${t.min}+ total points` : `Default rank for new players`;
   // Slot 1 — points / title (always shown)
   out.push({cls:"title",style:`--bc:${t.color}`,icon:BADGE_GEM,label:t.name,tipT:t.name,tipS:titleSub});
   // Slot 2 — house (only if the player is in one)
   if(p.house&&HOUSES[p.house]) out.push({cls:"house-"+p.house,icon:HOUSE_SVG,label:HOUSES[p.house].name+" House",tipT:HOUSES[p.house].name+" House",tipS:HOUSES[p.house].name+" House member"});
-  // Slot 3 — developer, else tester, else subtier tester, else retired, else premium, else nothing
-  if(p.developer) out.push({cls:"developer",icon:DEV_SVG,label:"Developer",tipT:"Developer",tipS:"Developer Of MSR Tiers"});
-  else if(p.tester) out.push({cls:"tester",icon:TESTER_SVG,label:"Tester",tipT:"Tester",tipS:"Main tester for unranked players"});
-  else if(p.subtester){const gm=SUBGM[p.subtester]; const nm=gm?gm.name:p.subtester; out.push({cls:"subtester",icon:TESTER_SVG,label:"Subtier Tester",tipT:"Subtier Tester",tipS:`Main tester for ${nm}`});}
-  else if(isFullyRetired(p)) out.push({cls:"retired",icon:RETIRE_SVG,label:"Retired",tipT:"Retired",tipS:"Fully retired in all tested gamemodes"});
-  else if(p.premium) out.push({cls:"premium",icon:STAR_SVG,label:"Premium",tipT:"Premium",tipS:"Gained premium status through the Discord"});
+  // Slot 3 — every badge the player has, highest priority first
+  const slot3=[];
+  if(p.developer) slot3.push({cls:"developer",icon:DEV_SVG,label:"Developer",tipT:"Developer",tipS:"Developer Of MSR Tiers"});
+  if(p.tester) slot3.push({cls:"tester",icon:TESTER_SVG,label:"Tester",tipT:"Tester",tipS:"Main tester for unranked players"});
+  if(p.subtester){const gm=SUBGM[p.subtester]; const nm=gm?gm.name:p.subtester; slot3.push({cls:"subtester",icon:TESTER_SVG,label:"Subtier Tester",tipT:"Subtier Tester",tipS:`Main tester for ${nm}`});}
+  if(isFullyRetired(p)) slot3.push({cls:"retired",icon:RETIRE_SVG,label:"Retired",tipT:"Retired",tipS:"Fully retired in all tested gamemodes"});
+  if(p.premium) slot3.push({cls:"premium",icon:STAR_SVG,label:"Premium",tipT:"Premium",tipS:"Gained premium status through the Discord"});
+  // Overall keeps only the top badge for slot 3; the profile shows all of them.
+  if(allSlot3) out.push(...slot3);
+  else if(slot3.length) out.push(slot3[0]);
   return out;
 }
-function renderBadges(p,t){
-  return badgeDefs(p,t).map(b=>`<span class="badge ${b.cls}"${b.style?` style="${b.style}"`:""} data-tip-title="${b.tipT}" data-tip-sub="${b.tipS}">${b.icon}<span>${b.label}</span></span>`).join("");
+function renderBadges(p,t,allSlot3){
+  return badgeDefs(p,t,allSlot3).map(b=>`<span class="badge ${b.cls}"${b.style?` style="${b.style}"`:""} data-tip-title="${b.tipT}" data-tip-sub="${b.tipS}">${b.icon}<span>${b.label}</span></span>`).join("");
 }
 function playerBadges(p,t){ return `<div class="badges">${renderBadges(p,t)}</div>`; }
 
@@ -1173,8 +1179,8 @@ function openInfo(tab) {
   elModalBg.classList.add("open");
 }
 
-/* badge pills for the profile: same three-slot system, each with a hover explanation */
-function profileBadges(p,t){ return renderBadges(p,t); }
+/* badge pills for the profile: same slots, but slot 3 shows every badge the player has */
+function profileBadges(p,t){ return renderBadges(p,t,true); }
 function profileTierCard(g,val){
   const info=tierInfo(val), d=info.tier.slice(-1);
   const rc=(info.retired||info.peak)?" retired":"";
