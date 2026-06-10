@@ -284,6 +284,7 @@
       "name": "__bigd",
       "region": "",
       "premium": true,
+      "developer": true,
       "subtester": "pearl",
       "tiers": {
         "sword": "HT2",
@@ -385,6 +386,7 @@
       "name": "CoolIcee",
       "region": "",
       "premium": true,
+      "developer": true,
       "house": "blue",
       "tiers": {
         "sword": "LT3",
