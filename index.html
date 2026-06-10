@@ -387,6 +387,7 @@ main{max-width:1200px;margin:0 auto;padding:26px 20px 60px}
 .badge.title{background:linear-gradient(135deg,color-mix(in srgb,var(--bc) 70%,#ffffff),var(--bc) 52%,color-mix(in srgb,var(--bc) 76%,#000000));box-shadow:0 0 13px color-mix(in srgb,var(--bc) 55%,transparent)}
 .badge.premium{background:linear-gradient(135deg,#cfe2ff,var(--accent) 52%,#5f86c8);box-shadow:0 0 13px rgba(var(--glow-rgb),.5)}
 .badge.retired{background:linear-gradient(135deg,#5d6878,#39434f 52%,#23282f);color:#eef3fa;box-shadow:0 0 12px rgba(120,134,156,.42)}
+.badge.developer{background:linear-gradient(135deg,#ff9a9a,#e01b1b 52%,#8a0d0d);color:#fff;box-shadow:0 0 13px rgba(224,27,27,.55)}
 .badge.tester{background:linear-gradient(135deg,#ffc879,#e8862c 52%,#9c5a17);box-shadow:0 0 13px rgba(232,134,44,.5)}
 .badge.subtester{background:linear-gradient(135deg,#a274ec,#6a3bc0 52%,#3a1d6e);color:#f1eafb;box-shadow:0 0 13px rgba(123,67,200,.55)}
 .badge.house-blue{background:linear-gradient(135deg,#5b8de6,#2f5fc0 52%,#163a86);color:#eef3fa;box-shadow:0 0 13px rgba(74,120,210,.5)}
@@ -706,11 +707,12 @@ const STAR_SVG=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strok
 const RETIRE_SVG=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="8" y1="12" x2="16" y2="12"/></svg>`;
 const TESTER_SVG=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4l-6.6 6.6a1.5 1.5 0 0 0 2.1 2.1l6.6-6.6a4 4 0 0 0 5.4-5.4l-2.4 2.4-2.1-2.1z"/></svg>`;
 const HOUSE_SVG=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v9h14v-9"/><path d="M9.5 19v-5h5v5"/></svg>`;
+const DEV_SVG=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 7 3 12 8 17"/><polyline points="16 7 21 12 16 17"/></svg>`;
 const SWITCH_SVG=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h13l-3-3M20 16H7l3 3"/></svg>`;
 const HOUSES={blue:{name:"Blue"},red:{name:"Red"},yellow:{name:"Yellow"},green:{name:"Green"}};
 
 /* Build every badge a player has, in priority order:
-   title > tester > subtier tester > retired > house > premium.
+   title > house > developer > tester > subtier tester > retired > premium.
    Overall shows the top 3; the profile shows all. */
 function badgeDefs(p,t){
   const out=[];
@@ -719,8 +721,9 @@ function badgeDefs(p,t){
   out.push({cls:"title",style:`--bc:${t.color}`,icon:BADGE_GEM,label:t.name,tipT:t.name,tipS:titleSub});
   // Slot 2 — house (only if the player is in one)
   if(p.house&&HOUSES[p.house]) out.push({cls:"house-"+p.house,icon:HOUSE_SVG,label:HOUSES[p.house].name+" House",tipT:HOUSES[p.house].name+" House",tipS:HOUSES[p.house].name+" House member"});
-  // Slot 3 — tester, else subtier tester, else retired, else premium, else nothing
-  if(p.tester) out.push({cls:"tester",icon:TESTER_SVG,label:"Tester",tipT:"Tester",tipS:"Main tester for unranked players"});
+  // Slot 3 — developer, else tester, else subtier tester, else retired, else premium, else nothing
+  if(p.developer) out.push({cls:"developer",icon:DEV_SVG,label:"Developer",tipT:"Developer",tipS:"Developer Of MSR Tiers"});
+  else if(p.tester) out.push({cls:"tester",icon:TESTER_SVG,label:"Tester",tipT:"Tester",tipS:"Main tester for unranked players"});
   else if(p.subtester){const gm=SUBGM[p.subtester]; const nm=gm?gm.name:p.subtester; out.push({cls:"subtester",icon:TESTER_SVG,label:"Subtier Tester",tipT:"Subtier Tester",tipS:`Main tester for ${nm}`});}
   else if(isFullyRetired(p)) out.push({cls:"retired",icon:RETIRE_SVG,label:"Retired",tipT:"Retired",tipS:"Fully retired in all tested gamemodes"});
   else if(p.premium) out.push({cls:"premium",icon:STAR_SVG,label:"Premium",tipT:"Premium",tipS:"Gained premium status through the Discord"});
