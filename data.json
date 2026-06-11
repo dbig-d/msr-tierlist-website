@@ -135,6 +135,7 @@
   "players": [
     {
       "name": "cricketrlz0000",
+      "uuid": "00664629-ce7c-4ce0-8453-3bc5e0c24178",
       "region": "",
       "premium": true,
       "tester": true,
@@ -154,6 +155,7 @@
     },
     {
       "name": "Brojules",
+      "uuid": "23de923d-b6d5-4d4e-b720-cfde725c66bc",
       "region": "",
       "premium": true,
       "house": "red",
@@ -172,6 +174,7 @@
     },
     {
       "name": "xqste",
+      "uuid": "a27c7488-7f42-4ef0-abf8-479cae11babc",
       "region": "",
       "premium": true,
       "tester": true,
@@ -203,6 +206,7 @@
     },
     {
       "name": "__synn",
+      "uuid": "ce44d3cd-71e8-48f5-9fa4-f6dd218cacad",
       "region": "",
       "premium": true,
       "subtester": "fireball",
@@ -227,6 +231,7 @@
     },
     {
       "name": "contagiousfart",
+      "uuid": null,
       "region": "",
       "house": "green",
       "tiers": {
@@ -239,6 +244,7 @@
     },
     {
       "name": "Piqt",
+      "uuid": "f2b85707-4565-4b17-9ffc-5662b80bda53",
       "region": "",
       "premium": true,
       "house": "green",
@@ -261,6 +267,7 @@
     },
     {
       "name": "_knife__",
+      "uuid": "a2fb2215-89e1-4292-91a1-ccb32ab6f063",
       "region": "",
       "premium": true,
       "house": "green",
@@ -282,6 +289,7 @@
     },
     {
       "name": "__bigd",
+      "uuid": "6c48cb74-1aad-42dc-8b4a-3248e8574ed0",
       "region": "",
       "premium": true,
       "developer": true,
@@ -306,6 +314,7 @@
     },
     {
       "name": "Velox2102",
+      "uuid": "309df4f1-9707-40f5-8a63-776ddb23e90d",
       "region": "",
       "premium": true,
       "house": "yellow",
@@ -328,6 +337,7 @@
     },
     {
       "name": "a_noble",
+      "uuid": "b5513e5a-c6ee-4475-ae30-01e216b1ba21",
       "region": "",
       "tiers": {
         "sword": "LT2",
@@ -340,6 +350,7 @@
     },
     {
       "name": "Jaynaka15",
+      "uuid": "9906065b-1ed1-479d-96f0-38e79c2af9b7",
       "region": "",
       "subtester": "spleef",
       "house": "red",
@@ -362,6 +373,7 @@
     },
     {
       "name": "D2ck000",
+      "uuid": null,
       "region": "",
       "premium": true,
       "subtester": "creeper",
@@ -384,6 +396,7 @@
     },
     {
       "name": "CoolIcee",
+      "uuid": "e018a0c4-f8f5-4f73-aaab-1844b4755de3",
       "region": "",
       "premium": true,
       "developer": true,
@@ -406,6 +419,7 @@
     },
     {
       "name": "Gameories",
+      "uuid": "eb2bfb83-31d9-41e9-9cd2-677f550e2817",
       "region": "",
       "premium": true,
       "house": "yellow",
@@ -421,6 +435,7 @@
     },
     {
       "name": "g0d0rs4tan",
+      "uuid": "dfbdf120-f551-4f1a-a4c1-b587bb7a4f27",
       "region": "",
       "tiers": {
         "sword": {
@@ -435,6 +450,7 @@
     },
     {
       "name": "BizarreOwl309",
+      "uuid": "496f4d43-b56a-46cf-b9f3-cfb71f763476",
       "region": "",
       "tiers": {
         "sword": "HT4",
@@ -443,6 +459,7 @@
     },
     {
       "name": "Darth_Dragony",
+      "uuid": "0ac7c02e-a168-4965-967f-19c8ddfd1983",
       "region": "",
       "tiers": {
         "sword": "HT3",
@@ -453,6 +470,7 @@
     },
     {
       "name": "BigA_1",
+      "uuid": "ab5484eb-8f8e-4048-9619-9bff2cbb5d06",
       "region": "",
       "premium": true,
       "house": "blue",
@@ -465,6 +483,7 @@
     },
     {
       "name": "WaterSkies",
+      "uuid": "f1386e70-a6de-4403-a9c1-b6c4642904df",
       "region": "",
       "house": "green",
       "tiers": {
@@ -478,6 +497,7 @@
     },
     {
       "name": "Qiubius",
+      "uuid": "0ec2d4f8-440d-4101-a6f6-b5d7c1eb5d71",
       "region": "",
       "tiers": {
         "sword": "HT4",
@@ -489,6 +509,7 @@
     },
     {
       "name": "bigmaclover2121",
+      "uuid": "0998bd2f-42d2-4606-9909-f372e9dbf952",
       "region": "",
       "premium": true,
       "house": "red",
@@ -503,6 +524,7 @@
     },
     {
       "name": "ZzAsleepzZ",
+      "uuid": "0fcc8d78-4853-4091-a4ad-0256794d5bc6",
       "region": "",
       "premium": true,
       "tiers": {
@@ -515,6 +537,7 @@
     },
     {
       "name": "brandvogel",
+      "uuid": "3a1e8078-5b8b-4b0c-b078-76a70fb04a64",
       "region": "",
       "house": "yellow",
       "tiers": {
@@ -524,6 +547,7 @@
     },
     {
       "name": "epicddss",
+      "uuid": "f14bcce3-674c-4074-b48e-b55db1cbc57c",
       "region": "",
       "premium": true,
       "tiers": {
@@ -532,6 +556,7 @@
     },
     {
       "name": "StrongMan09",
+      "uuid": "619a105b-a324-43e9-8588-3e1dd945fa51",
       "region": "",
       "premium": true,
       "tiers": {
@@ -563,6 +588,7 @@
     },
     {
       "name": "Bronzon155",
+      "uuid": "e089c360-1d01-402f-849e-6a7fcbac12ec",
       "region": "",
       "tiers": {
         "axe": {
@@ -581,6 +607,7 @@
     },
     {
       "name": "Auspower88",
+      "uuid": "2688ebfe-38a5-40a5-bedf-7f98b9707c62",
       "region": "",
       "house": "yellow",
       "tiers": {
@@ -592,6 +619,7 @@
     },
     {
       "name": "qonobo",
+      "uuid": "88fc99e5-39fe-4444-a699-1f0fa5cd37ab",
       "region": "",
       "premium": true,
       "house": "green",
@@ -603,6 +631,7 @@
     },
     {
       "name": "ovenokara",
+      "uuid": "141f75aa-566f-449f-8312-1e81ca55ecd4",
       "region": "",
       "house": "blue",
       "tiers": {
@@ -612,6 +641,7 @@
     },
     {
       "name": "FinKi_",
+      "uuid": "4e2beabd-bb47-4b2b-80fb-06a8205cb4bb",
       "region": "",
       "tiers": {
         "dsmp": "HT5",
@@ -620,6 +650,7 @@
     },
     {
       "name": "_vendofy_",
+      "uuid": "c32a4e8a-7a3b-4477-a276-b0fee05f0911",
       "region": "",
       "house": "blue",
       "tiers": {
@@ -629,6 +660,7 @@
     },
     {
       "name": "fanaticbbsi51633",
+      "uuid": "4faa36a4-e993-4cbd-a2ff-e88b11435d7f",
       "region": "",
       "tiers": {
         "hsmp": "LT1"
@@ -636,6 +668,7 @@
     },
     {
       "name": "MrP3nguin_",
+      "uuid": "ae878019-d1c3-41db-ba28-0a241525d281",
       "region": "",
       "premium": true,
       "house": "yellow",
@@ -672,6 +705,7 @@
     },
     {
       "name": "fanaticloudy",
+      "uuid": "d4e8d1c6-fc4c-42d3-b735-b44a00918c5c",
       "region": "",
       "tiers": {
         "hsmp": "LT2",
@@ -680,6 +714,7 @@
     },
     {
       "name": "ThornierChunk58",
+      "uuid": "540e8fad-4048-4054-97b6-d3bb8d22def2",
       "region": "",
       "tiers": {
         "dsmp": "HT5",
@@ -690,6 +725,7 @@
     },
     {
       "name": "Henrry999",
+      "uuid": "a0ba2a52-1bc7-49a7-b97a-88db72081ca5",
       "region": "",
       "premium": true,
       "house": "green",
@@ -725,6 +761,7 @@
     },
     {
       "name": "ThatYibble",
+      "uuid": "00dfac99-c780-47fb-9fdb-07c1a900380c",
       "region": "",
       "tiers": {
         "uhc": "LT3",
@@ -733,6 +770,7 @@
     },
     {
       "name": "TheBestMonster",
+      "uuid": "beaac19a-4878-4a4b-a19a-b7e760d30651",
       "region": "",
       "tiers": {
         "sword": "LT3"
@@ -740,6 +778,7 @@
     },
     {
       "name": "BizzareOwl309",
+      "uuid": null,
       "region": "",
       "tiers": {},
       "house": "blue"
