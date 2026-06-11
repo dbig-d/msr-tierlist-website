@@ -250,6 +250,20 @@ select:focus{border-color:var(--accent)}
    display: none;
  }
 
+ /* Clip the content snapshot to the viewport during a mode switch.
+    Returning to Maintiers renders the full Overall list, so #content (which owns
+    the `tab-content` view-transition-name) becomes thousands of pixels tall. The
+    View Transition then has to rasterize and animate that entire height as a single
+    texture, which is what made the back-transition stutter — the forward switch
+    lands on a short Subtier panel and never pays that cost. Clipping to the viewport
+    makes both directions animate a similarly sized texture. The rows past the fold
+    are off-screen anyway, so nothing visibly changes when the clip is lifted once
+    the transition finishes — no flicker, no re-triggered animations. */
+ html.switching-modes #content {
+   max-height: 100vh;
+   overflow: clip;
+ }
+
 .sub-mode .tabs-bar {
   background: rgba(241, 245, 249, 0.84);
 }
