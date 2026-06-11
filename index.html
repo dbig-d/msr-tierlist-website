@@ -250,6 +250,20 @@ select:focus{border-color:var(--accent)}
    display: none;
  }
 
+ /* During a mode switch the whole panel slides in as one unit via the view
+    transition, so suppress the per-element `rise` entrance stagger. Returning to
+    Maintiers lands on the Overall view (up to 60 heavy rows); running 60 staggered
+    row animations on the live DOM while the compositor drives the slide was what
+    made the back-transition janky. The forward switch lands on the near-empty first
+    subtier, so it never paid that cost. Killing the stagger here makes both
+    directions composite the same way. The class is removed once the transition
+    finishes, by which point elements are already at their final state — no re-trigger,
+    no jump. */
+ html.switching-modes #content .row,
+ html.switching-modes #content .col {
+   animation: none !important;
+ }
+
 .sub-mode .tabs-bar {
   background: rgba(241, 245, 249, 0.84);
 }
