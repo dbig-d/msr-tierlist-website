@@ -785,6 +785,13 @@
       "region": "",
       "tiers": {},
       "house": "blue"
+    },
+    {
+      "name": "croissant69420_x",
+      "region": "",
+      "tiers": {
+        "sword": "HT2"
+      }
     }
   ]
 }
