@@ -790,7 +790,8 @@
       "name": "croissant69420_x",
       "region": "",
       "tiers": {
-        "sword": "HT2"
+        "sword": "HT2",
+        "axe": "LT2"
       }
     }
   ]
